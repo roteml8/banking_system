@@ -16,6 +16,21 @@ public class BankManager extends AccountOwner {
 		this.numUsersToApprove = 0;
 	}
 	
+	public void setAndApproveAcc()
+	{
+		//TODO
+	}
+	
+	public void addUserToApprove(AccountOwner accountOwner)
+	{
+		//TODO
+	}
+	
+	public void produceReport()
+	{
+		//TODO
+	}
+	
 	
 
 }

@@ -17,5 +17,9 @@ public class Account {
 		this.accProperties = accProperties;
 	}
 	
-	
+	public void addActivity(ActivityData activityData)
+	{
+		if (numActivities < MAX_ACTIVITIES)
+			activities[numActivities++] = activityData;
+	}
 }

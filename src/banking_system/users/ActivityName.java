@@ -3,7 +3,7 @@ package banking_system.users;
 public enum ActivityName {
 
 	DEPOSIT,
-	WITHDRAWL,
+	WITHDRAWAL,
 	GET_LOAN,
 	TRANSFER,
 	FEE_COLLECTION,
