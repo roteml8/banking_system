@@ -19,14 +19,22 @@ public class BankManager extends AccountOwner {
 	public void setAndApproveAcc()
 	{
 		//TODO
+		for (int i=0; i<numUsersToApprove; i++)
+		{
+			
+		}
+		
+		numUsersToApprove = 0;
 	}
 	
 	public void addUserToApprove(AccountOwner accountOwner)
 	{
-		//TODO
+		usersToApprove[numUsersToApprove++] = accountOwner;
+		
 	}
 	
-	public void produceReport()
+	@Override
+	public void produceReport(LocalDate start)
 	{
 		//TODO
 	}

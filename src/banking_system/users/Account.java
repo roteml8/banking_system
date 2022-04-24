@@ -8,6 +8,7 @@ public class Account {
 	protected AccountProperties accProperties;
 	protected ActivityData[] activities;
 	protected int numActivities;
+	protected double debt;
 
 	public Account(AccountProperties accProperties)
 	{
@@ -15,6 +16,7 @@ public class Account {
 		this.numActivities = 0;
 		this.activities = new ActivityData[MAX_ACTIVITIES];
 		this.accProperties = accProperties;
+		this.debt = 0;
 	}
 	
 	public void addActivity(ActivityData activityData)

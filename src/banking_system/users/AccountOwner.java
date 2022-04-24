@@ -28,7 +28,16 @@ public class AccountOwner extends Person {
 	
 	public void produceReport(LocalDate start)
 	{
+		for (int i=0; i<account.numActivities; i++)
+		{
+			ActivityData current = account.activities[i];
+			if (current.timeStamp.isBefore(LocalDateTime.now()))
+				System.out.println(current.info);
+		}
+		checkBalance();
 		//TODO
+		System.out.println("Current debt is: "+account.debt);
+		// current debt
 		
 	}
 	
@@ -94,6 +103,7 @@ public class AccountOwner extends Person {
 		{
 			// deposit to bank
 			// register deposit to bank 
+			account.debt -= amount;
 		}
 		
 	}
@@ -107,14 +117,15 @@ public class AccountOwner extends Person {
 			System.out.println("Operation is impossible due to illegal parameters!");
 			return;
 		}
-		double montlyReturn = amount/numOfMonths;
-		System.out.println("Amount of monthly return is: "+montlyReturn);
-		deposit(amount);
+		double monthlyReturn = amount/numOfMonths;
+		System.out.println("Amount of monthly return is: "+monthlyReturn);
 		// bank.withdrawal()
 		
 		account.balance += amount;
+		account.debt += amount;
 		LocalDateTime now = LocalDateTime.now();
-		String info = String.format("Loan of %f NIS from the bank", amount);
+		String info = String.format("Loan of %f NIS from the bank, monthly payment: %f", amount, monthlyReturn);
+		// add interest to info
 		ActivityData newActivity = new ActivityData(ActivityName.GET_LOAN, -amount, now, info);
 		account.addActivity(newActivity);
 	}
