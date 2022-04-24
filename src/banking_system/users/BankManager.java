@@ -9,13 +9,15 @@ public class BankManager extends AccountOwner {
 	protected AccountOwner[] usersToApprove;
 	protected int numUsersToApprove;
 
-	public BankManager(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate,
-			double monthlyIncome) {
-		super(firstName, lastName, phoneNum, birthDate, monthlyIncome);
-		this.usersToApprove = new AccountOwner[MAX_USERS];
+
+	public BankManager(String firstName, String lastName, int areaCode, int number, int day, int month, int year,
+			Account account, double monthlyIncome, Credentials credentials) {
+		super(firstName, lastName, areaCode, number, day, month, year, account, monthlyIncome, credentials);
 		this.numUsersToApprove = 0;
+		this.usersToApprove = new AccountOwner[MAX_USERS];
+
 	}
-	
+
 	public void setAndApproveAcc()
 	{
 		//TODO

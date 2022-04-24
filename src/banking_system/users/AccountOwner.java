@@ -14,13 +14,32 @@ public class AccountOwner extends Person {
 	protected double monthlyIncome;
 	protected Credentials credentials;
 	
-	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate,
-			double monthlyIncome) {
-		super(firstName, lastName, phoneNum, birthDate);
+	public AccountOwner(String firstName, String lastName, int areaCode, int number, int day, int month, int year,
+			Account account, double monthlyIncome, Credentials credentials) {
+		super(firstName, lastName, areaCode, number, day, month, year);
+		setMonthlyIncome(monthlyIncome);
+		setCredentials(credentials);
+	}
+
+
+
+
+	public void setMonthlyIncome(double monthlyIncome) {
+		if (monthlyIncome < 0)
+			monthlyIncome = 0;
 		this.monthlyIncome = monthlyIncome;
 	}
-	
-	
+
+
+
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
+
+
+
 	public void checkBalance()
 	{
 		System.out.println("Current balance is: "+account.balance);
