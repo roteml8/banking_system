@@ -48,6 +48,7 @@ public class AccountOwner extends Person {
 	
 	public void produceReport(LocalDate start)
 	{
+		System.out.println(this);
 		for (int i=0; i<account.numActivities; i++)
 		{
 			ActivityData current = account.activities[i];
@@ -55,7 +56,6 @@ public class AccountOwner extends Person {
 				System.out.println(current.info);
 		}
 		checkBalance();
-		//TODO
 		System.out.println("Current debt is: "+account.debt);
 		// current debt
 		
@@ -63,7 +63,6 @@ public class AccountOwner extends Person {
 	
 	public void deposit(double amount)
 	{
-		//TODO
 		// check deposit is possible...
 		
 		LocalDateTime now = LocalDateTime.now();
@@ -71,11 +70,11 @@ public class AccountOwner extends Person {
 		ActivityData newActivity = new ActivityData(ActivityName.DEPOSIT, amount, now, info);
 		account.addActivity(newActivity);
 		account.changeBalance(amount);
+		System.out.println("Successfully completed deposit.\n");
 	}
 	
 	public void withdrawl(double amount)
 	{
-		//TODO
 		// check withdrawal is possible...
 		if (amount > account.accProperties.dailyMax)
 		{
@@ -87,11 +86,12 @@ public class AccountOwner extends Person {
 		ActivityData newActivity = new ActivityData(ActivityName.WITHDRAWAL, -amount, now, info);
 		account.addActivity(newActivity);
 		account.changeBalance(-amount);
+		System.out.println("Successfully completed withdrawal.\n");
+
 	}
 	
 	public void transferFunds(double amount, AccountOwner receiver)
 	{
-		//TODO
 		// check if possible...
 		if (amount > MAX_TRANSFER)
 		{
@@ -107,12 +107,11 @@ public class AccountOwner extends Person {
 		ActivityData senderData = new ActivityData(ActivityName.TRANSFER, -amount, now, senderInfo);
 		account.addActivity(senderData);
 		receiver.account.addActivity(receiverData);
-		System.out.println("Successfully transfered funds.");
+		System.out.println("Successfully transfered funds.\n");
 	}
 	
 	public void payBill(double amount, Payee payee)
 	{
-		//TODO
 		// check if possible...
 		if (amount > MAX_BILL_PAYMENT)
 		{
@@ -125,17 +124,21 @@ public class AccountOwner extends Person {
 		ActivityData newActivity = new ActivityData(ActivityName.PAY_BIll, -amount, now, info);
 		account.addActivity(newActivity);
 		if (payee == Payee.BANK)
-		{
-			// deposit to bank
-			// register deposit to bank 
+		{ 
 			account.changeDebt(-amount);
+			
+			AppManager.manager.account.changeBalance(amount);
+			String bankInfo = String.format("Deposit of %f NIS returned from %s", amount, firstName+lastName);
+			ActivityData bankActivity = new ActivityData(ActivityName.DEPOSIT, amount, now, bankInfo);
+			AppManager.manager.account.addActivity(bankActivity);
 		}
+		System.out.println("Successfully completed bill payment.\n");
+
 		
 	}
 	
 	public void getLoan(double amount, int numOfMonths)
 	{
-		//TODO
 		// check if possible...
 		if (numOfMonths > MAX_MONTHLY_PAYMENTS || amount > account.accProperties.maxLoan)
 		{
@@ -144,16 +147,34 @@ public class AccountOwner extends Person {
 		}
 		double monthlyReturn = amount/numOfMonths;
 		System.out.println("Amount of monthly return is: "+monthlyReturn);
-		// bank.withdrawal()
 		
+		LocalDateTime now = LocalDateTime.now();
+		String bankInfo = String.format("Withdrawal of %f NIS for loan to %s", amount, firstName+lastName);
+		ActivityData bankActivity = new ActivityData(ActivityName.WITHDRAWAL, -amount, now, bankInfo);
+		AppManager.manager.account.changeBalance(-amount);
+		
+		AppManager.manager.account.addActivity(bankActivity);
 		account.changeBalance(amount);
 		account.changeDebt(amount);
-		LocalDateTime now = LocalDateTime.now();
-		String info = String.format("Loan of %f NIS from the bank, monthly payment: %f", amount, monthlyReturn);
-		// add interest to info
+		String info = String.format("Loan of %f NIS from the bank, monthly payment: %f\n", amount, monthlyReturn);
+		info += String.format("Interest range: %f-%f\n", account.accProperties.interestLow, account.accProperties.interestHigh);
 		ActivityData newActivity = new ActivityData(ActivityName.GET_LOAN, amount, now, info);
 		account.addActivity(newActivity);
+		
+		System.out.println("Successfully completed loan.\n");
+
 	}
 
+
+
+
+	@Override
+	public String toString() {
+		return "AccountOwner [account=" + account + ", monthlyIncome=" + monthlyIncome + ", credentials=" + credentials
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNum=" + phoneNum + ", birthDate="
+				+ birthDate + "]";
+	}
+
+	
 
 }

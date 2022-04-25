@@ -15,6 +15,7 @@ public class BankManager extends AccountOwner {
 		this.numUsersToApprove = 0;
 		this.usersToApprove = new AccountOwner[MAX_USERS];
 		this.account = new Account(AccountProperties.TITANIUM);
+		//this.account.changeBalance(50000);
 	}
 
 

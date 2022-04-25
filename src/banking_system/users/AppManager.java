@@ -10,8 +10,8 @@ public class AppManager {
 	
 	private static AccountOwner currUser;
 	private static AccountOwner[] users;
-	private static BankManager manager;
-	private int numOfUsers;
+	protected static BankManager manager;
+	private static int numOfUsers;
 	
 	protected static Scanner sc = new Scanner(System.in);
 	
@@ -20,6 +20,7 @@ public class AppManager {
 		users = new AccountOwner[MAX_USERS];
 		setManager();
 		numOfUsers = 0;
+		setUsers();
 	}
 	
 	private void addUser(AccountOwner owner)
@@ -33,6 +34,24 @@ public class AppManager {
 		PhoneNumber managerPhone = new PhoneNumber(052, 5360337);
 		LocalDate managerBday = LocalDate.of(1994, 8, 8);
 		manager = new BankManager("Rotem", "Levi", managerPhone, managerBday, 50000, managerCred);
+	}
+	
+	private void setUsers()
+	{
+		Credentials c1 = new Credentials("yaron", "yaron12");
+		LocalDate bday1 = LocalDate.of(1994, 6, 22);
+		PhoneNumber phone1 = new PhoneNumber(54,5304014);
+		AccountOwner owner1 = new AccountOwner("Yaron", "Shender", phone1, bday1, 20000, c1);
+		owner1.account = new Account(AccountProperties.BRONZE);
+		addUser(owner1);
+		
+		Credentials c2 = new Credentials("matanl", "matan755");
+		LocalDate bday2 = LocalDate.of(2007, 5, 7);
+		PhoneNumber phone2 = new PhoneNumber(54,5301114);
+		AccountOwner owner2 = new AccountOwner("Matan", "Levi", phone2, bday2, 20000, c2);
+		owner2.account = new Account(AccountProperties.GOLD);
+		addUser(owner2);
+		
 	}
 	
 	public AccountOwner login(String username, String password)
@@ -96,10 +115,10 @@ public class AppManager {
 	
 	public static AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNum)
 	{
-		for (AccountOwner user: users)
+		for (int i=0; i<numOfUsers; i++)
 		{
-			if (user.phoneNum.equals(phoneNum))
-				return user;
+			if (users[i].phoneNum.equals(phoneNum))
+				return users[i];
 		}
 		return null;
 	}
@@ -112,9 +131,9 @@ public class AppManager {
 	
 	public static boolean doesUsernameExist(String username)
 	{
-		for (AccountOwner user: users)
+		for (int i=0; i<numOfUsers; i++)
 		{
-			if (user.credentials.username.equals(username))
+			if (users[i].credentials.username.equals(username))
 				return true;
 		}
 		return false;
@@ -362,4 +381,11 @@ public class AppManager {
 		}
 		return payee;
 	}
+
+	public static int getNumOfUsers() {
+
+		return numOfUsers;
+	}
+	
+	
 }
