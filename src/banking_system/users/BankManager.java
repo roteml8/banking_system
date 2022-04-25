@@ -42,6 +42,7 @@ public class BankManager extends AccountOwner {
 	@Override
 	public void produceReport(LocalDate start)
 	{
+		System.out.println("Presenting report for bank account: ");
 		super.produceReport(start);
 	}
 	

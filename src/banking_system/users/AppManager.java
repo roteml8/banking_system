@@ -18,8 +18,8 @@ public class AppManager {
 	public AppManager()
 	{
 		users = new AccountOwner[MAX_USERS];
-		setManager();
 		numOfUsers = 0;
+		setManager();
 		setUsers();
 	}
 	
@@ -34,6 +34,7 @@ public class AppManager {
 		PhoneNumber managerPhone = new PhoneNumber(052, 5360337);
 		LocalDate managerBday = LocalDate.of(1994, 8, 8);
 		manager = new BankManager("Rotem", "Levi", managerPhone, managerBday, 50000, managerCred);
+		users[numOfUsers++] = manager;
 	}
 	
 	private void setUsers()
@@ -201,7 +202,7 @@ public class AppManager {
 	
 	public void printUserOptions()
 	{
-		System.out.println("To open account, enter 1");
+		System.out.println("\nTo open account, enter 1");
 		System.out.println("To login with username and password, enter 2");
 		System.out.println("To login with phone number, enter 3");
 		System.out.println("To exit the system, enter -1");
@@ -340,7 +341,7 @@ public class AppManager {
 	
 	public void printOwnerOptions()
 	{
-		System.out.println("To check your balance, enter 1");
+		System.out.println("\nTo check your balance, enter 1");
 		System.out.println("To produce an activity report, enter 2");
 		System.out.println("To make a deposit, enter 3");
 		System.out.println("To make a withdrawal, enter 4");
@@ -352,7 +353,7 @@ public class AppManager {
 	
 	public int getAuthenticationCode()
 	{
-		int code = (int) Math.random() * 10000 + 1000;
+		int code = (int) (Math.random() * 10000) + 1000;
 		return code;
 	}
 	

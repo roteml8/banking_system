@@ -70,6 +70,12 @@ public class Credentials {
 		Credentials other = (Credentials) obj;
 		return Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
+
+
+	@Override
+	public String toString() {
+		return "Credentials [username=" + username + ", password=" + password + "]";
+	}
 	
 	
 	

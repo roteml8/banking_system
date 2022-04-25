@@ -21,12 +21,12 @@ public class Account {
 	
 	public void changeBalance(double amount)
 	{
-		
+		balance += amount;
 	}
 	
 	public void changeDebt(double amount)
 	{
-		
+		debt += amount;
 	}
 	
 	public void addActivity(ActivityData activityData)
@@ -35,4 +35,11 @@ public class Account {
 			activities[numActivities++] = activityData;
 		
 	}
+
+	@Override
+	public String toString() {
+		return "Account [accProperties=" + accProperties + "]";
+	}
+	
+	
 }
