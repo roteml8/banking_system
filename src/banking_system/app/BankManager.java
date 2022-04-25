@@ -30,6 +30,11 @@ public class BankManager extends AccountOwner {
 	{
 		int accountType;
 		AccountProperties[] types = AccountProperties.values();
+		if (numUsersToApprove == 0)
+		{
+			System.out.println("No users waiting for approval.");
+			return;
+		}
 		for (int i=0; i<numUsersToApprove; i++)
 		{
 			accountType = (int) Math.random() * 4;
