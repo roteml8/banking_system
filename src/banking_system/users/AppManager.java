@@ -6,11 +6,34 @@ import java.util.Scanner;
 
 public class AppManager {
 	
-	protected static AccountOwner currUser;
-	protected static AccountOwner[] users;
-	protected static BankManager manager;
+	private static final int MAX_USERS = 200;
+	
+	private static AccountOwner currUser;
+	private static AccountOwner[] users;
+	private static BankManager manager;
+	private int numOfUsers;
 	
 	protected static Scanner sc = new Scanner(System.in);
+	
+	public AppManager()
+	{
+		users = new AccountOwner[MAX_USERS];
+		setManager();
+		numOfUsers = 0;
+	}
+	
+	private void addUser(AccountOwner owner)
+	{
+		users[numOfUsers++] = owner;
+	}
+	
+	private void setManager()
+	{
+		Credentials managerCred = new Credentials("rotemlevi", "rotem8");
+		PhoneNumber managerPhone = new PhoneNumber(052, 5360337);
+		LocalDate managerBday = LocalDate.of(1994, 8, 8);
+		manager = new BankManager("Rotem", "Levi", managerPhone, managerBday, 50000, managerCred);
+	}
 	
 	public AccountOwner login(String username, String password)
 	{
@@ -143,7 +166,7 @@ public class AppManager {
 		System.out.println("Please enter your monthly income");
 		double income = sc.nextDouble();
 		AccountOwner newOwner = new AccountOwner(name, lastName, newPhone, birthDate, income, newCred);
-		//TODO add new owner to DB
+		addUser(newOwner);
 		manager.addUserToApprove(newOwner);
 		System.out.println("Application completed. waiting for managar approval and setting.");
 		
@@ -184,10 +207,11 @@ public class AppManager {
 				System.out.println("Enter password");
 				password = sc.nextLine();
 				currUser = login(username, password);
-				if (currUser instanceof BankManager)
+				if (currUser != null)
+					if (currUser instanceof BankManager)
 						managerMenu();
-				else
-					accountOwnerMenu();
+					else
+						accountOwnerMenu();
 				break;
 			case 3:
 				System.out.println("Enter phone area code");
@@ -196,10 +220,11 @@ public class AppManager {
 				number = sc.nextInt();
 				PhoneNumber currPhone = new PhoneNumber(areaCode, number);
 				currUser = login(currPhone);
-				if (currUser instanceof BankManager)
-					managerMenu();
-				else
-					accountOwnerMenu();
+				if (currUser != null)
+					if (currUser instanceof BankManager)
+						managerMenu();
+					else
+						accountOwnerMenu();
 				break;
 			default:
 				break;

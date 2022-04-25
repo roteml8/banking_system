@@ -9,7 +9,7 @@ public class BankManager extends AccountOwner {
 	protected AccountOwner[] usersToApprove;
 	protected int numUsersToApprove;
 
-	public BankManager(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate, Account account,
+	public BankManager(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate,
 			double monthlyIncome, Credentials credentials) {
 		super(firstName, lastName, phoneNum, birthDate, monthlyIncome, credentials);
 		this.numUsersToApprove = 0;
@@ -21,10 +21,12 @@ public class BankManager extends AccountOwner {
 
 	public void setAndApproveAcc()
 	{
-		//TODO
+		int accountType;
+		AccountProperties[] types = AccountProperties.values();
 		for (int i=0; i<numUsersToApprove; i++)
 		{
-			
+			accountType = (int) Math.random() * 4;
+			usersToApprove[i].account = new Account(types[accountType]);
 		}
 		
 		numUsersToApprove = 0;
@@ -39,7 +41,7 @@ public class BankManager extends AccountOwner {
 	@Override
 	public void produceReport(LocalDate start)
 	{
-		//TODO
+		super.produceReport(start);
 	}
 	
 
