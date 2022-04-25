@@ -42,14 +42,12 @@ public class Credentials {
 		{
 			char currentChar = password.charAt(i);
 			if (Character.isLetter(currentChar))
-				if (!foundLetter)
-					foundLetter = true;
+				foundLetter = true;
 			else if (Character.isDigit(currentChar))
-				if (!foundDigit)
-					foundDigit = true;
+				foundDigit = true;
 
 		}
-		return foundLetter && foundDigit;
+		return (foundLetter && foundDigit);
 	}
 
 

@@ -152,19 +152,21 @@ public class AppManager {
 			System.out.println("There is already an account with this phone number. please login or register with a different number");
 			return;
 		}
+		sc.nextLine();
 		System.out.println("Enter your first name");
-		String name = sc.nextLine();
+		String name = sc.next();
 		System.out.println("Enter your last name");
-		String lastName = sc.nextLine();
+		String lastName = sc.next();
 		System.out.println("Enter year of birth");
 		int year = sc.nextInt();
 		System.out.println("Enter month of birth (1-12)");
 		int month = sc.nextInt();
 		System.out.println("Enter day of birth (1-31)");
 		int day = sc.nextInt();
+		sc.nextLine();
 		LocalDate birthDate = LocalDate.of(year, month, day);
 		System.out.println("Enter username: letters and digits only");
-		String username = sc.nextLine();
+		String username = sc.next();
 		if (doesUsernameExist(username))
 		{
 			System.out.println("Username already exists in the system. please login");
@@ -173,14 +175,14 @@ public class AppManager {
 		while (!Credentials.isUsernameLegal(username))
 		{
 			System.out.println("Invalid username, please enter a username according to the instructions");
-			username = sc.nextLine();
+			username = sc.next();
 		}
 		System.out.println("Please enter password: 4-8 characters, must contain a digit and a letter");
-		String password = sc.nextLine();
+		String password = sc.next();
 		while (!Credentials.isPasswordLegal(password))
 		{
 			System.out.println("Invalid password, please enter a password according to the instructions");
-			password = sc.nextLine();
+			password = sc.next();
 		}
 		Credentials newCred = new Credentials(username, password);
 		System.out.println("Please enter your monthly income");
@@ -212,6 +214,7 @@ public class AppManager {
 	{
 		printUserOptions();
 		int choice = sc.nextInt();
+		sc.nextLine();
 		int areaCode, number;
 		String username, password;
 		while (choice != -1)
@@ -223,9 +226,9 @@ public class AppManager {
 				break;
 			case 2:
 				System.out.println("Enter username");
-				username = sc.nextLine();
+				username = sc.next();
 				System.out.println("Enter password");
-				password = sc.nextLine();
+				password = sc.next();
 				currUser = login(username, password);
 				if (currUser != null)
 					if (currUser instanceof BankManager)
@@ -251,6 +254,7 @@ public class AppManager {
 			}
 			printUserOptions();
 			choice = sc.nextInt();
+			sc.nextLine();
 		}
 		System.out.println("Goodbye!");
 	}
@@ -329,14 +333,25 @@ public class AppManager {
 	{
 
 		int choice;
-		System.out.println("To approve and set accounts, enter 1");
-		System.out.println("To owner menu, enter -1");
+		printManagerOptions();
 		choice = sc.nextInt();
-		if (choice == 1)
-			manager.setAndApproveAcc();
-		else
-			accountOwnerMenu();
+		while (choice != -1)
+		{
+			if (choice == 1)
+				manager.setAndApproveAcc();
+			else
+				accountOwnerMenu();
+			printManagerOptions();
+			choice = sc.nextInt();
+		}
 
+	}
+	
+	public void printManagerOptions()
+	{
+		System.out.println("To approve and set accounts, enter 1");
+		System.out.println("To owner menu, enter 2");
+		System.out.println("To main menu, enter -1");
 	}
 	
 	public void printOwnerOptions()
