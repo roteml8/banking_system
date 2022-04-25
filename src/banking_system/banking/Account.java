@@ -1,4 +1,6 @@
-package banking_system.users;
+package banking_system.banking;
+
+import java.time.LocalDateTime;
 
 public class Account {
 	
@@ -39,6 +41,29 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account [accProperties=" + accProperties + "]";
+	}
+
+	public AccountProperties getAccProperties() {
+		return accProperties;
+	}
+
+	public int getNumActivities() {
+		return numActivities;
+	}
+	
+	public void showActivites()
+	{
+		for (int i=0; i<numActivities; i++)
+		{
+			ActivityData current = activities[i];
+			if (current.timeStamp.isBefore(LocalDateTime.now()))
+				System.out.println(current.info);
+		}
+		System.out.println("Current debt is: "+debt);
+	}
+
+	public double getBalance() {
+		return balance;
 	}
 	
 	

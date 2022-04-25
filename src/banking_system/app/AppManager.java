@@ -1,8 +1,15 @@
-package banking_system.users;
+package banking_system.app;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+
+import banking_system.banking.Account;
+import banking_system.banking.AccountProperties;
+import banking_system.banking.Payee;
+import banking_system.users.AccountOwner;
+import banking_system.users.Credentials;
+import banking_system.users.PhoneNumber;
 
 public class AppManager {
 	
@@ -10,7 +17,7 @@ public class AppManager {
 	
 	private static AccountOwner currUser;
 	private static AccountOwner[] users;
-	protected static BankManager manager;
+	public static BankManager manager;
 	private static int numOfUsers;
 	
 	protected static Scanner sc = new Scanner(System.in);
@@ -43,14 +50,14 @@ public class AppManager {
 		LocalDate bday1 = LocalDate.of(1994, 6, 22);
 		PhoneNumber phone1 = new PhoneNumber(54,5304014);
 		AccountOwner owner1 = new AccountOwner("Yaron", "Shender", phone1, bday1, 20000, c1);
-		owner1.account = new Account(AccountProperties.BRONZE);
+		owner1.setAccount(new Account(AccountProperties.BRONZE)); 
 		addUser(owner1);
 		
 		Credentials c2 = new Credentials("matanl", "matan755");
 		LocalDate bday2 = LocalDate.of(2007, 5, 7);
 		PhoneNumber phone2 = new PhoneNumber(54,5301114);
 		AccountOwner owner2 = new AccountOwner("Matan", "Levi", phone2, bday2, 20000, c2);
-		owner2.account = new Account(AccountProperties.GOLD);
+		owner2.setAccount(new Account(AccountProperties.GOLD));
 		addUser(owner2);
 		
 	}
@@ -62,11 +69,11 @@ public class AppManager {
 		Credentials ownerCredentials = null;
 		for (int i=0; i<users.length && loggingOwner == null; i++)
 		{
-			Credentials currentCredentials = users[i].credentials;
-			if (currentCredentials.username.equals(username))
+			Credentials currentCredentials = users[i].getCredentials();
+			if (currentCredentials.getUsername().equals(username))
 			{
 				loggingOwner = users[i];
-				ownerCredentials = users[i].credentials;
+				ownerCredentials = currentCredentials;
 			}
 		}
 		if (loggingOwner == null)
@@ -74,7 +81,7 @@ public class AppManager {
 			System.out.println("No account owner with the given username.");
 			return null;
 		}
-		if (ownerCredentials.password.equals(password))
+		if (ownerCredentials.getPassword().equals(password))
 		{
 			System.out.println("Successfully logged in.");
 			return loggingOwner;
@@ -86,7 +93,7 @@ public class AppManager {
 			System.out.printf("Wrong password! you have %d more tries\n", tries);
 			System.out.println("Enter password");
 			String currentTry = sc.next();
-			if (ownerCredentials.password.equals(currentTry))
+			if (ownerCredentials.getPassword().equals(currentTry))
 			{
 				System.out.println("Successfully logged in.");
 				return loggingOwner;
@@ -118,7 +125,7 @@ public class AppManager {
 	{
 		for (int i=0; i<numOfUsers; i++)
 		{
-			if (users[i].phoneNum.equals(phoneNum))
+			if (users[i].getPhoneNum().equals(phoneNum))
 				return users[i];
 		}
 		return null;
@@ -134,7 +141,7 @@ public class AppManager {
 	{
 		for (int i=0; i<numOfUsers; i++)
 		{
-			if (users[i].credentials.username.equals(username))
+			if (users[i].getCredentials().getUsername().equals(username))
 				return true;
 		}
 		return false;

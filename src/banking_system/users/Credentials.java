@@ -74,6 +74,16 @@ public class Credentials {
 	public String toString() {
 		return "Credentials [username=" + username + ", password=" + password + "]";
 	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
 	
 	
 	

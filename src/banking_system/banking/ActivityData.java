@@ -1,4 +1,4 @@
-package banking_system.users;
+package banking_system.banking;
 
 import java.time.LocalDateTime;
 

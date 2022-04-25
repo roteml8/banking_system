@@ -1,4 +1,4 @@
-package banking_system.users;
+package banking_system.banking;
 
 public enum Payee {
 

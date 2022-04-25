@@ -1,6 +1,12 @@
-package banking_system.users;
+package banking_system.app;
 
 import java.time.LocalDate;
+
+import banking_system.banking.Account;
+import banking_system.banking.AccountProperties;
+import banking_system.users.AccountOwner;
+import banking_system.users.Credentials;
+import banking_system.users.PhoneNumber;
 
 public class BankManager extends AccountOwner {
 	
@@ -27,8 +33,8 @@ public class BankManager extends AccountOwner {
 		for (int i=0; i<numUsersToApprove; i++)
 		{
 			accountType = (int) Math.random() * 4;
-			usersToApprove[i].account = new Account(types[accountType]);
-			System.out.println("Set the account of "+usersToApprove[i].firstName+" "+usersToApprove[i].lastName+
+			usersToApprove[i].setAccount(new Account(types[accountType]));
+			System.out.println("Set the account of "+usersToApprove[i].getFullName()+
 					" to: "+types[accountType].toString());
 		}
 		

@@ -36,6 +36,10 @@ public class Person {
 		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", phoneNum=" + phoneNum + ", birthDate="
 				+ birthDate + "]";
 	}
+
+	public PhoneNumber getPhoneNum() {
+		return phoneNum;
+	}
 	
 	
 }
