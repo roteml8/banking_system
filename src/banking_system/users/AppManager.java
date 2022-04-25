@@ -152,9 +152,8 @@ public class AppManager {
 	public void run()
 	{
 		//TODO
-		int choice;
 		System.out.println("Welcome to the AJBC Bank!");
-		printUserMenu();
+		userMenu();
 		
 	}
 	
@@ -172,7 +171,6 @@ public class AppManager {
 		int choice = sc.nextInt();
 		int areaCode, number;
 		String username, password;
-		AccountOwner loggedOwner;
 		while (choice != -1)
 		{
 			switch (choice)
@@ -185,8 +183,10 @@ public class AppManager {
 				username = sc.nextLine();
 				System.out.println("Enter password");
 				password = sc.nextLine();
-				loggedOwner = login(username, password);
-				if (loggedOwner != null)
+				currUser = login(username, password);
+				if (currUser instanceof BankManager)
+						managerMenu();
+				else
 					accountOwnerMenu();
 				break;
 			case 3:
@@ -195,8 +195,10 @@ public class AppManager {
 				System.out.println("Enter phone number");
 				number = sc.nextInt();
 				PhoneNumber currPhone = new PhoneNumber(areaCode, number);
-				loggedOwner = login(currPhone);
-				if (loggedOwner != null)
+				currUser = login(currPhone);
+				if (currUser instanceof BankManager)
+					managerMenu();
+				else
 					accountOwnerMenu();
 				break;
 			default:
@@ -212,25 +214,127 @@ public class AppManager {
 	{
 		printOwnerOptions();
 		int choice = sc.nextInt();
+		int year, month, day, areaCode, number;
+		double amount;
+		PhoneNumber phoneNum;
 		while (choice != -1)
 		{
 			switch (choice)
 			{
-			
+			case 1:
+				currUser.checkBalance();
+				break;
+			case 2:
+				System.out.println("Enter start date for report: year, month and day of month");
+				year = sc.nextInt();
+				month = sc.nextInt();
+				day = sc.nextInt();
+				LocalDate start = LocalDate.of(year, month, day);
+				currUser.produceReport(start);
+				break;
+			case 3:
+				System.out.println("Your authentication code is "+getAuthenticationCode());
+				System.out.println("Enter amount for deposit");
+				amount = sc.nextDouble();
+				currUser.deposit(amount);
+				break;
+			case 4:
+				System.out.println("Enter amount for withdrawal");
+				amount = sc.nextDouble();
+				currUser.withdrawl(amount);
+				break;
+			case 5:
+				System.out.println("Enter phone number of receiver: area code and number");
+				areaCode = sc.nextInt();
+				number = sc.nextInt();
+				phoneNum = new PhoneNumber(areaCode, number);
+				AccountOwner receiver = getOwnerByPhoneNum(phoneNum);
+				if (receiver == null)
+				{
+					System.out.println("No user with given phone number, operation terminates.");
+					break;
+				}
+				System.out.println("Enter amount to transfer");
+				amount = sc.nextDouble();
+				currUser.transferFunds(amount, receiver);
+				break;
+			case 6:
+				Payee payee = getPayee();
+				System.out.println("Enter amount to pay");
+				amount = sc.nextDouble();
+				currUser.payBill(amount, payee);
+				break;
+			case 7: 
+				System.out.println("Enter amount to loan");
+				amount = sc.nextDouble();
+				System.out.println("Enter number of monthly payments");
+				int months = sc.nextInt();
+				currUser.getLoan(amount, months);
+				break;
+			default:
+				break;
 			}
+			printOwnerOptions();
+			choice = sc.nextInt();
 		}
 		
+	}
+	
+	public void managerMenu()
+	{
+
+		int choice;
+		System.out.println("To approve and set accounts, enter 1");
+		System.out.println("To owner menu, enter -1");
+		choice = sc.nextInt();
+		if (choice == 1)
+			manager.setAndApproveAcc();
+		else
+			accountOwnerMenu();
+
 	}
 	
 	public void printOwnerOptions()
 	{
 		System.out.println("To check your balance, enter 1");
 		System.out.println("To produce an activity report, enter 2");
-		System.out.println("To made a deposit, enter 3");
+		System.out.println("To make a deposit, enter 3");
 		System.out.println("To make a withdrawal, enter 4");
 		System.out.println("To transfer funds, enter 5");
 		System.out.println("To pay a bill, enter 6");
 		System.out.println("To get a loan, enter 7");
 		System.out.println("To logout, enter -1");
+	}
+	
+	public int getAuthenticationCode()
+	{
+		int code = (int) Math.random() * 10000 + 1000;
+		return code;
+	}
+	
+	public Payee getPayee()
+	{
+		System.out.println("To pay the bank, enter 1");
+		System.out.println("To pay the phone company, enter 2");
+		System.out.println("To pay the water company, enter 3");
+		System.out.println("To pay the electric company, enter 4");
+		int payeeOpt;
+		payeeOpt = sc.nextInt();
+		Payee payee;
+		switch (payeeOpt)
+		{
+		case 1:
+			payee = Payee.BANK;
+			break;
+		case 2:
+			payee = Payee.PHONE_COMPANY;
+			break;
+		case 3:
+			payee = Payee.WATER_COMPANY;
+			break;
+		default:
+			payee = Payee.ELECTRIC_COMPANY; 
+		}
+		return payee;
 	}
 }

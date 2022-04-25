@@ -42,12 +42,7 @@ public class BankManager extends AccountOwner {
 		//TODO
 	}
 	
-	@Override
-	public void printMenu()
-	{
-		super.printMenu();
-		System.out.println("To approve pending accounts, enter 8");
-	}
+
 	
 	
 
