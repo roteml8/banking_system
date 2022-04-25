@@ -196,6 +196,11 @@ public class AccountOwner extends Person {
 	public Credentials getCredentials() {
 		return credentials;
 	}
+
+
+	public double getMonthlyIncome() {
+		return monthlyIncome;
+	}
 	
 	
 	

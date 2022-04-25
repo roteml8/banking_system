@@ -28,8 +28,6 @@ public class BankManager extends AccountOwner {
 
 	public void setAndApproveAcc()
 	{
-		int accountType;
-		AccountProperties[] types = AccountProperties.values();
 		if (numUsersToApprove == 0)
 		{
 			System.out.println("No users waiting for approval.");
@@ -37,10 +35,11 @@ public class BankManager extends AccountOwner {
 		}
 		for (int i=0; i<numUsersToApprove; i++)
 		{
-			accountType = (int) Math.random() * 4;
-			usersToApprove[i].setAccount(new Account(types[accountType]));
-			System.out.println("Set the account of "+usersToApprove[i].getFullName()+
-					" to: "+types[accountType].toString());
+			AccountOwner currentOwner = usersToApprove[i];
+			AccountProperties currentProp = getAccountType(currentOwner.getMonthlyIncome());
+			usersToApprove[i].setAccount(new Account(currentProp));
+			System.out.println("Set the account of "+currentOwner.getFullName()+
+					" to: "+currentProp.toString());
 		}
 		
 		numUsersToApprove = 0;
@@ -59,7 +58,17 @@ public class BankManager extends AccountOwner {
 		super.produceReport(start);
 	}
 	
-
+	public AccountProperties getAccountType(double income)
+	{
+		if (income > 50000)
+			return AccountProperties.TITANIUM;
+		else if (income > 20000)
+			return AccountProperties.GOLD;
+		else if (income > 10000)
+			return AccountProperties.SILVER;
+		else
+			return AccountProperties.BRONZE;
+	}
 	
 	
 
