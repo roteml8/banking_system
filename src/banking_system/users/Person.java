@@ -9,11 +9,11 @@ public class Person {
 	protected final PhoneNumber phoneNum;
 	protected LocalDate birthDate;
 	
-	public Person(String firstName, String lastName, int areaCode, int number, int day, int month, int year) {
+	public Person(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate) {
 		setFirstName(firstName);
 		setLastName(lastName);
-		setBirthDate(day, month, year);
-		this.phoneNum = new PhoneNumber(areaCode, number);
+		setBirthDate(birthDate);
+		this.phoneNum = phoneNum;
 	}
 
 	public void setFirstName(String firstName) {
@@ -26,9 +26,9 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	public void setBirthDate(int day, int month, int year) {
-		this.birthDate = LocalDate.of(year, month, day);
-	
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	@Override

@@ -9,14 +9,15 @@ public class BankManager extends AccountOwner {
 	protected AccountOwner[] usersToApprove;
 	protected int numUsersToApprove;
 
-
-	public BankManager(String firstName, String lastName, int areaCode, int number, int day, int month, int year,
-			Account account, double monthlyIncome, Credentials credentials) {
-		super(firstName, lastName, areaCode, number, day, month, year, account, monthlyIncome, credentials);
+	public BankManager(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate, Account account,
+			double monthlyIncome, Credentials credentials) {
+		super(firstName, lastName, phoneNum, birthDate, monthlyIncome, credentials);
 		this.numUsersToApprove = 0;
 		this.usersToApprove = new AccountOwner[MAX_USERS];
-
+		this.account = new Account(AccountProperties.TITANIUM);
 	}
+
+
 
 	public void setAndApproveAcc()
 	{
@@ -39,6 +40,13 @@ public class BankManager extends AccountOwner {
 	public void produceReport(LocalDate start)
 	{
 		//TODO
+	}
+	
+	@Override
+	public void printMenu()
+	{
+		super.printMenu();
+		System.out.println("To approve pending accounts, enter 8");
 	}
 	
 	

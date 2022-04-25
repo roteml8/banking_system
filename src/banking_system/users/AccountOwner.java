@@ -14,11 +14,12 @@ public class AccountOwner extends Person {
 	protected double monthlyIncome;
 	protected Credentials credentials;
 	
-	public AccountOwner(String firstName, String lastName, int areaCode, int number, int day, int month, int year,
-			Account account, double monthlyIncome, Credentials credentials) {
-		super(firstName, lastName, areaCode, number, day, month, year);
+	public AccountOwner(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate,
+			double monthlyIncome, Credentials credentials) {
+		super(firstName, lastName, phoneNum, birthDate);
 		setMonthlyIncome(monthlyIncome);
 		setCredentials(credentials);
+		this.account = null;
 	}
 
 
@@ -65,11 +66,11 @@ public class AccountOwner extends Person {
 		//TODO
 		// check deposit is possible...
 		
-		account.balance += amount;
 		LocalDateTime now = LocalDateTime.now();
 		String info = String.format("Deposit of %f NIS", amount);
 		ActivityData newActivity = new ActivityData(ActivityName.DEPOSIT, amount, now, info);
 		account.addActivity(newActivity);
+		account.changeBalance(amount);
 	}
 	
 	public void withdrawl(double amount)
@@ -81,11 +82,11 @@ public class AccountOwner extends Person {
 			System.out.println("Operation is impossible due to amount exceeding limit");
 			return;
 		}
-		account.balance -= amount;
 		LocalDateTime now = LocalDateTime.now();
 		String info = String.format("Withdrawl of %f NIS", amount);
 		ActivityData newActivity = new ActivityData(ActivityName.WITHDRAWAL, -amount, now, info);
 		account.addActivity(newActivity);
+		account.changeBalance(-amount);
 	}
 	
 	public void transferFunds(double amount, Account receiver)
@@ -113,7 +114,7 @@ public class AccountOwner extends Person {
 			System.out.println("Operation is impossible due to amount exceeding limit");
 			return;
 		}
-		account.balance -= amount;
+		account.changeBalance(-amount);
 		LocalDateTime now = LocalDateTime.now();
 		String info = String.format("Bill payment of %f NIS to %s", amount, payee.toString());
 		ActivityData newActivity = new ActivityData(ActivityName.PAY_BIll, -amount, now, info);
@@ -122,7 +123,7 @@ public class AccountOwner extends Person {
 		{
 			// deposit to bank
 			// register deposit to bank 
-			account.debt -= amount;
+			account.changeDebt(-amount);
 		}
 		
 	}
@@ -140,13 +141,14 @@ public class AccountOwner extends Person {
 		System.out.println("Amount of monthly return is: "+monthlyReturn);
 		// bank.withdrawal()
 		
-		account.balance += amount;
-		account.debt += amount;
+		account.changeBalance(amount);
+		account.changeDebt(amount);
 		LocalDateTime now = LocalDateTime.now();
 		String info = String.format("Loan of %f NIS from the bank, monthly payment: %f", amount, monthlyReturn);
 		// add interest to info
-		ActivityData newActivity = new ActivityData(ActivityName.GET_LOAN, -amount, now, info);
+		ActivityData newActivity = new ActivityData(ActivityName.GET_LOAN, amount, now, info);
 		account.addActivity(newActivity);
 	}
+
 
 }

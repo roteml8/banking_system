@@ -47,11 +47,9 @@ public class Credentials {
 			else if (Character.isDigit(currentChar))
 				if (!foundDigit)
 					foundDigit = true;
-			else 
-				return false;
 
 		}
-		return foundLetter;
+		return foundLetter && foundDigit;
 	}
 
 

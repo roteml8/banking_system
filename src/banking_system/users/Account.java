@@ -19,9 +19,20 @@ public class Account {
 		this.debt = 0;
 	}
 	
+	public void changeBalance(double amount)
+	{
+		
+	}
+	
+	public void changeDebt(double amount)
+	{
+		
+	}
+	
 	public void addActivity(ActivityData activityData)
 	{
 		if (numActivities < MAX_ACTIVITIES)
 			activities[numActivities++] = activityData;
+		
 	}
 }
