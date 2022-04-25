@@ -31,7 +31,7 @@ public class AppManager {
 	private void setManager()
 	{
 		Credentials managerCred = new Credentials("rotemlevi", "rotem8");
-		PhoneNumber managerPhone = new PhoneNumber(052, 5360337);
+		PhoneNumber managerPhone = new PhoneNumber(52, 5360337);
 		LocalDate managerBday = LocalDate.of(1994, 8, 8);
 		manager = new BankManager("Rotem", "Levi", managerPhone, managerBday, 50000, managerCred);
 		users[numOfUsers++] = manager;
@@ -85,7 +85,7 @@ public class AppManager {
 			
 			System.out.printf("Wrong password! you have %d more tries\n", tries);
 			System.out.println("Enter password");
-			String currentTry = sc.nextLine();
+			String currentTry = sc.next();
 			if (ownerCredentials.password.equals(currentTry))
 			{
 				System.out.println("Successfully logged in.");

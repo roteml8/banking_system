@@ -15,7 +15,7 @@ public class BankManager extends AccountOwner {
 		this.numUsersToApprove = 0;
 		this.usersToApprove = new AccountOwner[MAX_USERS];
 		this.account = new Account(AccountProperties.TITANIUM);
-		//this.account.changeBalance(50000);
+		this.account.changeBalance(500000);
 	}
 
 
@@ -28,6 +28,8 @@ public class BankManager extends AccountOwner {
 		{
 			accountType = (int) Math.random() * 4;
 			usersToApprove[i].account = new Account(types[accountType]);
+			System.out.println("Set the account of "+usersToApprove[i].firstName+" "+usersToApprove[i].lastName+
+					" to: "+types[accountType].toString());
 		}
 		
 		numUsersToApprove = 0;

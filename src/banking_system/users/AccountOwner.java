@@ -101,8 +101,8 @@ public class AccountOwner extends Person {
 		receiver.account.changeBalance(amount);
 		account.changeBalance(-amount);
 		LocalDateTime now = LocalDateTime.now();
-		String senderInfo = String.format("Transfer %d NIS to %s", amount, receiver.firstName+receiver.lastName);
-		String receiverInfo = String.format("Recevied %d NIS from %s", amount, firstName+lastName);
+		String senderInfo = String.format("Transfer %f NIS to %s", amount, receiver.firstName+receiver.lastName);
+		String receiverInfo = String.format("Recevied %f NIS from %s", amount, firstName+lastName);
 		ActivityData receiverData = new ActivityData(ActivityName.DEPOSIT, amount, now, receiverInfo);
 		ActivityData senderData = new ActivityData(ActivityName.TRANSFER, -amount, now, senderInfo);
 		account.addActivity(senderData);
