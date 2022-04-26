@@ -30,13 +30,18 @@ public class AppManager {
 		setUsers();
 	}
 	
-	// add a new account owner to users array
+	/**
+	 * add a new account owner to users array
+	 * @param owner the account owner to add
+	 */
 	private void addUser(AccountOwner owner)
 	{
 		users[numOfUsers++] = owner;
 	}
 	
-	// set the bank manager
+	/**
+	 * set the default bank manager
+	 */
 	private void setManager()
 	{
 		Credentials managerCred = new Credentials("rotemlevi", "rotem8");
@@ -46,7 +51,9 @@ public class AppManager {
 		users[numOfUsers++] = manager;
 	}
 	
-	// set two account owners
+	/**
+	 * set two default account owners
+	 */
 	private void setUsers()
 	{
 		Credentials c1 = new Credentials("yaron", "yaron12");
@@ -65,7 +72,9 @@ public class AppManager {
 		
 	}
 	
-	// run the application
+	/**
+	 * run the application and present main menu
+	 */
 	public void run()
 	{
 		System.out.println("Welcome to the AJBC Bank!");
@@ -73,10 +82,16 @@ public class AppManager {
 		
 	}
 	
-	// login with username and password
-	// if password is wrong, gives 3 more tries
-	// after 3 more wrong tries, the account is blocked for 30 minutes
-	// returns the logging account owner
+	
+	/**
+	 *  login with username and password
+	 *	if password is wrong, gives 3 more tries
+	 *	after 3 more wrong tries, the account is blocked for 30 minutes
+	 *	returns the logging account owner
+	 * @param username the account owner username
+	 * @param password the account owner password
+	 * @return the logged in account owner 
+	 */
 	public AccountOwner login(String username, String password)
 	{
 		
@@ -114,7 +129,11 @@ public class AppManager {
 		return null;
 	}
 	
-	// return if release time has passed
+	/**
+	 * check if release time has passed, false otherwise
+	 * @param release the account release time 
+	 * @return true if release time has passed, false otherwise
+	 */
 	public boolean checkRelease(LocalDateTime release)
 	{
 		if (release.isAfter(LocalDateTime.now()))
@@ -122,7 +141,11 @@ public class AppManager {
 		return true;
 			
 	}
-	// block account of user 
+	
+	/**
+	 * block account of user
+	 * @param user the account owner to block their account
+	 */
 	public void blockAccount(AccountOwner user)
 	{
 		LocalDateTime now = LocalDateTime.now();
@@ -131,8 +154,12 @@ public class AppManager {
 		System.out.println("Your account has been blocked, come back at "+releaseTime);
 	}
 	
-	// give user 3 tries to enter correct password
-	// return true if succeeds, false otherwise
+
+	/**
+	 * gives user 3 tries to enter correct password
+	 * @param user the account owner that is trying to log in 
+	 * @return true if user succeeds, false otherwise
+	 */
 	public boolean giveUser3TriesForPassword(AccountOwner user)
 	{
 		Credentials userCredentials = user.getCredentials();
@@ -151,14 +178,23 @@ public class AppManager {
 		return false;
 	}
 	
-	// check equality of passwords
+	/**
+	 * check equality of given password to the actual password
+	 * @param givenPassword the password that the users enter
+	 * @param actualPassword the user's actual password
+	 * @return true if passwords are equal, false otherwise
+	 */
 	public boolean checkPassword(String givenPassword, String actualPassword)
 	{
 		return givenPassword.equals(actualPassword);
 	}
 	
-	// login with phone number
-	// returns the loggin account owner, null if doesnt exist in the system
+
+	/**
+	 * login with phone number
+	 * @param phoneNum given phone number
+	 * @return the logging account owner, null if doesnt exist in the system
+	 */
 	public AccountOwner login(PhoneNumber phoneNum)
 	{
 		AccountOwner owner = getOwnerByPhoneNum(phoneNum);
@@ -171,7 +207,13 @@ public class AppManager {
 		return owner;
 	}
 	
-	// get account owner by phone number
+	
+	/**
+	 *  get account owner by phone number
+	 * @param phoneNum the given phone number
+	 * @return the account owner with the given phone number, 
+	 * null if there is no user with this number
+	 */
 	public static AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNum)
 	{
 		for (int i=0; i<numOfUsers; i++)
@@ -182,15 +224,23 @@ public class AppManager {
 		return null;
 	}
 	
-	// logout of the system
+	/**
+	 * logout of the system
+	 * set current user to null
+	 */
 	public void logout()
 	{
 		System.out.println("Successfully logged out.");
 		currUser = null;
 	}
 	
-	// returns account owner with the given username
-	// null if no such username
+	
+	/** 
+	 * get user by username
+	 * @param username
+	 * @return the account owner with the given username,
+	 * null if no user with the given username
+	 */
 	public AccountOwner getUserByUsername(String username)
 	{
 		for (int i=0; i<numOfUsers; i++)
@@ -252,9 +302,11 @@ public class AppManager {
 		return income;
 	}
 	
-	// open a new account 
-	// add new user to users array
-	// add new user to the manager's users to approve array
+	/**
+	 * open a new account
+	 * add new user to users array
+	 * add new user to the manager's users to approve array
+	 */
 	public void openAccount()
 	{
 		PhoneNumber newPhone = getPhoneFromInput();
@@ -290,6 +342,9 @@ public class AppManager {
 	}
 	
 	
+	/**
+	 * print the main menu
+	 */
 	public void printUserOptions()
 	{
 		System.out.println("\nTo open account, enter 1");
@@ -298,7 +353,10 @@ public class AppManager {
 		System.out.println("To exit the system, enter -1");
 	}
 	
-	// main menu for login, open account and exit system
+
+	/**
+	 *  main menu for login, opening account and exit system
+	 */
 	public void userMenu()
 	{
 		printUserOptions();
@@ -341,7 +399,10 @@ public class AppManager {
 		System.out.println("Goodbye!");
 	}
 	
-	// menu for account owners and logout
+	
+	/**
+	 * menu for account owners and logout
+	 */
 	public void accountOwnerMenu()
 	{
 		printOwnerOptions();
@@ -413,7 +474,9 @@ public class AppManager {
 		return amount;
 	}
 	
-	// menu for bank manager for set and approve accounts and access to account owners menu
+	/**
+	 * menu for bank manager for set and approve accounts and access to account owners menu
+	 */
 	public void managerMenu()
 	{
 
@@ -432,6 +495,9 @@ public class AppManager {
 
 	}
 	
+	/**
+	 * print menu for manager
+	 */
 	public void printManagerOptions()
 	{
 		System.out.println("To approve and set accounts, enter 1");
@@ -439,6 +505,9 @@ public class AppManager {
 		System.out.println("To main menu, enter -1");
 	}
 	
+	/**
+	 * print menu for account owners
+	 */
 	public void printOwnerOptions()
 	{
 		System.out.println("\nTo check your balance, enter 1");
@@ -451,14 +520,21 @@ public class AppManager {
 		System.out.println("To logout, enter -1");
 	}
 	
-	// get a 4 digit authentication code
+	/**
+	 * generate a 4 digit authentication code for deposit
+	 * @return a 4 digit authentication code
+	 */
 	public int getAuthenticationCode()
 	{
 		int code = (int) (Math.random() * 9000) + 1000;
 		return code;
 	}
 	
-	// get payee for bill payment
+	
+	/**
+	 * get payee for bill payment according to user input
+	 * @return the chosen payee
+	 */
 	public Payee getPayee()
 	{
 		System.out.println("To pay the bank, enter 1");

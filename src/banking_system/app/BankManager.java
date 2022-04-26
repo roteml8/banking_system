@@ -25,7 +25,11 @@ public class BankManager extends AccountOwner {
 	}
 
 
-
+	/**
+	 * approves users application and creates their accounts
+	 * sets account properties by monthly income
+	 * set number of users to approve to 0
+	 */
 	public void setAndApproveAcc()
 	{
 		if (numUsersToApprove == 0)
@@ -45,6 +49,10 @@ public class BankManager extends AccountOwner {
 		numUsersToApprove = 0;
 	}
 	
+	/** 
+	 * add a new user to the array of users to approve
+	 * @param accountOwner the new user to add
+	 */
 	public void addUserToApprove(AccountOwner accountOwner)
 	{
 		usersToApprove[numUsersToApprove++] = accountOwner;
@@ -52,6 +60,10 @@ public class BankManager extends AccountOwner {
 	}
 	
 	@Override
+	/**
+	 * produce activity report for manager account (bank account)
+	 * @param start start date for the report
+	 */
 	public void produceReport(LocalDate start)
 	{
 		System.out.println("Presenting report for bank account: ");
@@ -59,6 +71,11 @@ public class BankManager extends AccountOwner {
 		super.produceReport(start);
 	}
 	
+	/**
+	 * get account properties by monthly income
+	 * @param income monthly income of account owner
+	 * @return the corresponding account properties
+	 */
 	public AccountProperties getAccountType(double income)
 	{
 		if (income > 50000)

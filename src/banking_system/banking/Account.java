@@ -1,5 +1,6 @@
 package banking_system.banking;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import banking_system.app.AppManager;
@@ -28,16 +29,28 @@ public class Account {
 
 	}
 	
+	/**
+	 * update account balance
+	 * @param amount the change to apply to the balance
+	 */
 	public void changeBalance(double amount)
 	{
 		balance += amount;
 	}
 	
+	/**
+	 * update account debt 
+	 * @param amount the change to apply to the debt
+	 */
 	public void changeDebt(double amount)
 	{
 		debt += amount;
 	}
 	
+	/**
+	 * add activity data to account array of activities
+	 * @param activityData the activity data to add
+	 */
 	public void addActivity(ActivityData activityData)
 	{
 		if (numActivities < MAX_ACTIVITIES)
@@ -58,12 +71,17 @@ public class Account {
 		return numActivities;
 	}
 	
-	public void showActivites()
+	/**
+	 * print all account activities starting from the given start date 
+	 * @param start the given start date
+	 */
+	public void showActivites(LocalDate start)
 	{
 		for (int i=0; i<numActivities; i++)
 		{
 			ActivityData current = activities[i];
-			if (current.timeStamp.isBefore(LocalDateTime.now()))
+			LocalDate timeStamp = current.timeStamp.toLocalDate();
+			if (timeStamp.isAfter(start) || timeStamp.isEqual(start))
 				System.out.println(current);
 		}
 		System.out.println("Current debt is: "+debt);
@@ -81,9 +99,11 @@ public class Account {
 		this.releaseTime = releaseTime;
 	}
 	
-	// pay fee for bank
-	// register deposit to bank
-	// register fee collection to owner
+	/**
+	 * pay fee for the bank
+	 * register deposit to bank
+	 * register fee collection to owner
+	 */
 	public void payFee()
 	{
 		double fee = accProperties.feeLow;

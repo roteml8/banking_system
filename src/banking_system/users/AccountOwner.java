@@ -56,7 +56,7 @@ public class AccountOwner extends Person {
 	{
 		System.out.println(this);
 		System.out.println("------------------------------");
-		account.showActivites();
+		account.showActivites(start);
 		checkBalance();
 		
 	}
