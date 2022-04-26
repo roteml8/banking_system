@@ -49,7 +49,7 @@ public class AccountOwner extends Person {
 
 	public void checkBalance()
 	{
-		System.out.println("Current balance is: "+account.getBalance());
+		System.out.printf("Current balance is: %.2f\n",account.getBalance());
 	}
 	
 	public void produceReport(LocalDate start)
@@ -82,7 +82,7 @@ public class AccountOwner extends Person {
 			return;
 		}
 		LocalDateTime now = LocalDateTime.now();
-		String info = String.format("Withdrawl of %f NIS", amount);
+		String info = String.format("Withdrawl of %.2f NIS", amount);
 		ActivityData newActivity = new ActivityData(ActivityName.WITHDRAWAL, -amount, now, info);
 		account.addActivity(newActivity);
 		account.changeBalance(-amount);
@@ -102,8 +102,8 @@ public class AccountOwner extends Person {
 		receiver.account.changeBalance(amount);
 		account.changeBalance(-amount);
 		LocalDateTime now = LocalDateTime.now();
-		String senderInfo = String.format("Transfer %f NIS to %s", amount, receiver.getFullName());
-		String receiverInfo = String.format("Recevied %f NIS from %s", amount, getFullName());
+		String senderInfo = String.format("Transfer %.2f NIS to %s", amount, receiver.getFullName());
+		String receiverInfo = String.format("Recevied %.2f NIS from %s", amount, getFullName());
 		ActivityData receiverData = new ActivityData(ActivityName.DEPOSIT, amount, now, receiverInfo);
 		ActivityData senderData = new ActivityData(ActivityName.TRANSFER, -amount, now, senderInfo);
 		account.addActivity(senderData);
@@ -122,7 +122,7 @@ public class AccountOwner extends Person {
 		}
 		account.changeBalance(-amount);
 		LocalDateTime now = LocalDateTime.now();
-		String info = String.format("Bill payment of %f NIS to %s", amount, payee.toString());
+		String info = String.format("Bill payment of %.2f NIS to %s", amount, payee.toString());
 		ActivityData newActivity = new ActivityData(ActivityName.PAY_BIll, -amount, now, info);
 		account.addActivity(newActivity);
 		account.payFee();
@@ -131,7 +131,7 @@ public class AccountOwner extends Person {
 			account.changeDebt(-amount);
 			
 			AppManager.manager.account.changeBalance(amount);
-			String bankInfo = String.format("Deposit of %f NIS returned from %s", amount, getFullName());
+			String bankInfo = String.format("Deposit of %.2f NIS returned from %s", amount, getFullName());
 			ActivityData bankActivity = new ActivityData(ActivityName.DEPOSIT, amount, now, bankInfo);
 			AppManager.manager.account.addActivity(bankActivity);
 		}
@@ -154,15 +154,15 @@ public class AccountOwner extends Person {
 		System.out.println("Amount of monthly return is: "+monthlyReturn);
 		
 		LocalDateTime now = LocalDateTime.now();
-		String bankInfo = String.format("Withdrawal of %f NIS for loan to %s", amount, getFullName());
+		String bankInfo = String.format("Withdrawal of %.2f NIS for loan to %s", amount, getFullName());
 		ActivityData bankActivity = new ActivityData(ActivityName.WITHDRAWAL, -amount, now, bankInfo);
 		AppManager.manager.account.changeBalance(-amount);
 		
 		AppManager.manager.account.addActivity(bankActivity);
 		account.changeBalance(amount);
 		account.changeDebt(totalAmount);
-		String info = String.format("Loan of %f NIS from the bank, monthly payment: %f\n", amount, monthlyReturn);
-		info += String.format("Interest range: %f-%f\n", account.getAccProperties().interestLow, account.getAccProperties().interestHigh);
+		String info = String.format("Loan of %.2f NIS from the bank, monthly payment: %.2f\n", amount, monthlyReturn);
+		info += String.format("Interest rate: %.2f\n", interest);
 		ActivityData newActivity = new ActivityData(ActivityName.GET_LOAN, amount, now, info);
 		account.addActivity(newActivity);
 		account.payFee();
