@@ -9,12 +9,16 @@ import banking_system.banking.ActivityData;
 import banking_system.banking.ActivityName;
 import banking_system.banking.Payee;
 
+/**
+ * a class that represents an account owner and their info
+ * @author Rotem
+ *
+ */
 public class AccountOwner extends Person {
 	
 	private final static int MAX_MONTHLY_PAYMENTS = 60;
 	private final static int MAX_BILL_PAYMENT = 5000;
 	private final static int MAX_TRANSFER = 2000;
-
 		
 	protected Account account;
 	protected double monthlyIncome;
@@ -29,29 +33,34 @@ public class AccountOwner extends Person {
 	}
 
 
-
-
+	/**
+	 * set monthly income
+	 * if given income is smaller than 0, set income to 0
+	 * @param monthlyIncome monthly income
+	 */
 	public void setMonthlyIncome(double monthlyIncome) {
 		if (monthlyIncome < 0)
 			monthlyIncome = 0;
 		this.monthlyIncome = monthlyIncome;
 	}
 
-
-
-
+	
 	public void setCredentials(Credentials credentials) {
 		this.credentials = credentials;
 	}
 
-
-
-
+	/**
+	 * print account owner balance
+	 */
 	public void checkBalance()
 	{
 		System.out.printf("Current balance is: %.2f\n",account.getBalance());
 	}
 	
+	/**
+	 * print activities report of owner's account starting from start date
+	 * @param start start date
+	 */
 	public void produceReport(LocalDate start)
 	{
 		System.out.println(this);
@@ -61,9 +70,14 @@ public class AccountOwner extends Person {
 		
 	}
 	
+	/**
+	 * make a deposit to owner's account
+	 * register a deposit to owner's account
+	 * pay fee
+	 * @param amount the amount to deposit
+	 */
 	public void deposit(double amount)
 	{
-		// check deposit is possible...
 		
 		LocalDateTime now = LocalDateTime.now();
 		String info = String.format("Deposit of %f NIS", amount);
@@ -74,6 +88,12 @@ public class AccountOwner extends Person {
 		System.out.println("Successfully completed deposit.\n");
 	}
 	
+	/**
+	 * make a withdrawal from owner's account
+	 * register a withdrawal from owner's account
+	 * pay fee
+	 * @param amount the amount to withdraw
+	 */
 	public void withdrawl(double amount)
 	{
 		// check withdrawal is possible...
@@ -92,6 +112,14 @@ public class AccountOwner extends Person {
 
 	}
 	
+	/**
+	 * transfer funds from owner's account to another account
+	 * register deposit to receiver
+	 * register transfer from sender
+	 * pay fee
+	 * @param amount the amount to transfer
+	 * @param receiver the receiving account owner
+	 */
 	public void transferFunds(double amount, AccountOwner receiver)
 	{
 		// check if possible...
@@ -113,6 +141,13 @@ public class AccountOwner extends Person {
 		System.out.println("Successfully transfered funds.\n");
 	}
 	
+	/**
+	 * pay bill to payee 
+	 * register bill payment
+	 * register deposit to bank if payee is the bank
+	 * @param amount the amount to pay
+	 * @param payee the payee to receive the payment
+	 */
 	public void payBill(double amount, Payee payee)
 	{
 		// check if possible...
@@ -137,10 +172,16 @@ public class AccountOwner extends Person {
 			AppManager.manager.account.addActivity(bankActivity);
 		}
 		System.out.println("Successfully completed bill payment.\n");
-
-		
 	}
 	
+	/**
+	 * get a loan from bank to owner's account
+	 * register loan to owner
+	 * register withdrawal from the bank
+	 * pay fee
+	 * @param amount the amount to loan
+	 * @param numOfMonths the number of monthly payments to return
+	 */
 	public void getLoan(double amount, int numOfMonths)
 	{
 		// check if possible...
@@ -172,8 +213,6 @@ public class AccountOwner extends Person {
 	}
 
 
-
-
 	@Override
 	public String toString() {
 		
@@ -183,13 +222,9 @@ public class AccountOwner extends Person {
 
 	}
 
-
-
-
 	public Account getAccount() {
 		return account;
 	}
-
 
 
 	public void setAccount(Account account) {
@@ -212,6 +247,4 @@ public class AccountOwner extends Person {
 	}
 	
 	
-	
-
 }

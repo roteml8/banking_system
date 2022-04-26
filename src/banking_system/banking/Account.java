@@ -120,5 +120,10 @@ public class Account {
 		ActivityData ownerData = new ActivityData(ActivityName.FEE_COLLECTION, -fee, now, "Fee collection to bank");
 		addActivity(ownerData);
 	}
+
+	public int getID() {
+		return ID;
+	}
+	
 	
 }

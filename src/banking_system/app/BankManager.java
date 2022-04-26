@@ -44,8 +44,9 @@ public class BankManager extends AccountOwner {
 		{
 			AccountOwner currentOwner = usersToApprove[i];
 			AccountProperties currentProp = getAccountType(currentOwner.getMonthlyIncome());
-			usersToApprove[i].setAccount(new Account(currentProp));
-			System.out.println("Set the account of "+currentOwner.getFullName()+
+			Account newAccount = new Account(currentProp);
+			usersToApprove[i].setAccount(newAccount);
+			System.out.println("Set the account ID: "+newAccount.getID()+" of "+currentOwner.getFullName()+
 					" to: "+currentProp.toString());
 		}
 		
