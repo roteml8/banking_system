@@ -7,6 +7,7 @@ import banking_system.app.AppManager;
 public class Account {
 	
 	private int MAX_ACTIVITIES = 100;
+	private static int COUNTER = 1;
 	
 	protected double balance;
 	protected AccountProperties accProperties;
@@ -14,6 +15,7 @@ public class Account {
 	protected int numActivities;
 	protected double debt;
 	protected LocalDateTime releaseTime;
+	protected final int ID;
 
 	public Account(AccountProperties accProperties)
 	{
@@ -22,6 +24,7 @@ public class Account {
 		this.activities = new ActivityData[MAX_ACTIVITIES];
 		this.accProperties = accProperties;
 		this.debt = 0;
+		this.ID = COUNTER++;
 
 	}
 	
@@ -44,7 +47,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account Type:" + accProperties;
+		return "Account ID: "+ID+", Account Type:" + accProperties;
 	}
 
 	public AccountProperties getAccProperties() {
@@ -87,7 +90,7 @@ public class Account {
 		changeBalance(-fee);
 		LocalDateTime now = LocalDateTime.now();
 		AppManager.manager.getAccount().changeBalance(fee); 
-		ActivityData feeBankData = new ActivityData(ActivityName.DEPOSIT, fee, now ,"Fee collection from owner");
+		ActivityData feeBankData = new ActivityData(ActivityName.DEPOSIT, fee, now ,"Fee collection from account: "+ID);
 		AppManager.manager.getAccount().addActivity(feeBankData);
 		ActivityData ownerData = new ActivityData(ActivityName.FEE_COLLECTION, -fee, now, "Fee collection to bank");
 		addActivity(ownerData);
