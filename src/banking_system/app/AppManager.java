@@ -247,6 +247,7 @@ public class AppManager {
 		System.out.println("To exit the system, enter -1");
 	}
 	
+	// main menu for login, open account and exit system
 	public void userMenu()
 	{
 		printUserOptions();
@@ -296,6 +297,7 @@ public class AppManager {
 		System.out.println("Goodbye!");
 	}
 	
+	// menu for account owners and logout
 	public void accountOwnerMenu()
 	{
 		printOwnerOptions();
@@ -366,6 +368,7 @@ public class AppManager {
 		
 	}
 	
+	// menu for bank manager for set and approve accounts and access to account owners menu
 	public void managerMenu()
 	{
 
@@ -442,5 +445,10 @@ public class AppManager {
 		return numOfUsers;
 	}
 	
+	public static void printAllUsers()
+	{
+		for (int i=0; i< numOfUsers; i++)
+			System.out.println(users[i]);
+	}
 	
 }

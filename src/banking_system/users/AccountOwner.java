@@ -69,6 +69,7 @@ public class AccountOwner extends Person {
 		ActivityData newActivity = new ActivityData(ActivityName.DEPOSIT, amount, now, info);
 		account.addActivity(newActivity);
 		account.changeBalance(amount);
+		account.payFee();
 		System.out.println("Successfully completed deposit.\n");
 	}
 	
@@ -85,6 +86,7 @@ public class AccountOwner extends Person {
 		ActivityData newActivity = new ActivityData(ActivityName.WITHDRAWAL, -amount, now, info);
 		account.addActivity(newActivity);
 		account.changeBalance(-amount);
+		account.payFee();
 		System.out.println("Successfully completed withdrawal.\n");
 
 	}
@@ -106,6 +108,7 @@ public class AccountOwner extends Person {
 		ActivityData senderData = new ActivityData(ActivityName.TRANSFER, -amount, now, senderInfo);
 		account.addActivity(senderData);
 		receiver.account.addActivity(receiverData);
+		account.payFee();
 		System.out.println("Successfully transfered funds.\n");
 	}
 	
@@ -122,6 +125,7 @@ public class AccountOwner extends Person {
 		String info = String.format("Bill payment of %f NIS to %s", amount, payee.toString());
 		ActivityData newActivity = new ActivityData(ActivityName.PAY_BIll, -amount, now, info);
 		account.addActivity(newActivity);
+		account.payFee();
 		if (payee == Payee.BANK)
 		{ 
 			account.changeDebt(-amount);
@@ -144,7 +148,9 @@ public class AccountOwner extends Person {
 			System.out.println("Operation is impossible due to illegal parameters!");
 			return;
 		}
-		double monthlyReturn = amount/numOfMonths;
+		double interest = account.getAccProperties().interestLow;
+		double totalAmount = amount + (interest/100)*amount;
+		double monthlyReturn = totalAmount/numOfMonths;
 		System.out.println("Amount of monthly return is: "+monthlyReturn);
 		
 		LocalDateTime now = LocalDateTime.now();
@@ -154,12 +160,12 @@ public class AccountOwner extends Person {
 		
 		AppManager.manager.account.addActivity(bankActivity);
 		account.changeBalance(amount);
-		account.changeDebt(amount);
+		account.changeDebt(totalAmount);
 		String info = String.format("Loan of %f NIS from the bank, monthly payment: %f\n", amount, monthlyReturn);
 		info += String.format("Interest range: %f-%f\n", account.getAccProperties().interestLow, account.getAccProperties().interestHigh);
 		ActivityData newActivity = new ActivityData(ActivityName.GET_LOAN, amount, now, info);
 		account.addActivity(newActivity);
-		
+		account.payFee();
 		System.out.println("Successfully completed loan.\n");
 
 	}

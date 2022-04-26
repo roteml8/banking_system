@@ -76,6 +76,10 @@ public class Account {
 		this.releaseTime = releaseTime;
 	}
 	
-	
+	public void payFee()
+	{
+		double fee = accProperties.feeLow;
+		changeBalance(-fee);
+	}
 	
 }
