@@ -15,6 +15,13 @@ public class ActivityData {
 		this.timeStamp = timeStamp;
 		this.info = info;
 	}
+
+	@Override
+	public String toString() {
+		return activityName + ": Balance Change:" + balanceChange + ", Date:"
+				+ timeStamp + ", Info: " + info;
+	}
+	
 	
 	
 	

@@ -169,9 +169,11 @@ public class AccountOwner extends Person {
 
 	@Override
 	public String toString() {
-		return "AccountOwner [account=" + account + ", monthlyIncome=" + monthlyIncome + ", credentials=" + credentials
-				+ ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNum=" + phoneNum + ", birthDate="
-				+ birthDate + "]";
+		
+		return getFullName()+": "+"Phone: "+phoneNum+", Birth Date: "+birthDate+", "+credentials+
+				", Monthly Income: "+monthlyIncome+
+				"\n"+account;
+
 	}
 
 

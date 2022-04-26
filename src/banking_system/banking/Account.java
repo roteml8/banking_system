@@ -42,7 +42,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [accProperties=" + accProperties + "]";
+		return "Account Type:" + accProperties;
 	}
 
 	public AccountProperties getAccProperties() {
@@ -59,7 +59,7 @@ public class Account {
 		{
 			ActivityData current = activities[i];
 			if (current.timeStamp.isBefore(LocalDateTime.now()))
-				System.out.println(current.info);
+				System.out.println(current);
 		}
 		System.out.println("Current debt is: "+debt);
 	}

@@ -388,7 +388,7 @@ public class AppManager {
 	
 	public int getAuthenticationCode()
 	{
-		int code = (int) (Math.random() * 10000) + 1000;
+		int code = (int) (Math.random() * 9000) + 1000;
 		return code;
 	}
 	
