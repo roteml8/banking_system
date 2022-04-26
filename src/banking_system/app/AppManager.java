@@ -30,11 +30,13 @@ public class AppManager {
 		setUsers();
 	}
 	
+	// add a new account owner to users array
 	private void addUser(AccountOwner owner)
 	{
 		users[numOfUsers++] = owner;
 	}
 	
+	// set the bank manager
 	private void setManager()
 	{
 		Credentials managerCred = new Credentials("rotemlevi", "rotem8");
@@ -44,6 +46,7 @@ public class AppManager {
 		users[numOfUsers++] = manager;
 	}
 	
+	// set two account owners
 	private void setUsers()
 	{
 		Credentials c1 = new Credentials("yaron", "yaron12");
@@ -62,6 +65,7 @@ public class AppManager {
 		
 	}
 	
+	// run the application
 	public void run()
 	{
 		System.out.println("Welcome to the AJBC Bank!");
@@ -69,6 +73,10 @@ public class AppManager {
 		
 	}
 	
+	// login with username and password
+	// if password is wrong, gives 3 more tries
+	// after 3 more wrong tries, the account is blocked for 30 minutes
+	// returns the logging account owner
 	public AccountOwner login(String username, String password)
 	{
 		
@@ -129,6 +137,8 @@ public class AppManager {
 		return null;
 	}
 	
+	// login with phone number
+	// returns the loggin account owner, null if doesnt exist in the system
 	public AccountOwner login(PhoneNumber phoneNum)
 	{
 		AccountOwner owner = getOwnerByPhoneNum(phoneNum);
@@ -141,6 +151,7 @@ public class AppManager {
 		return owner;
 	}
 	
+	// get account owner by phone number
 	public static AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNum)
 	{
 		for (int i=0; i<numOfUsers; i++)
@@ -151,12 +162,15 @@ public class AppManager {
 		return null;
 	}
 	
+	// logout of the system
 	public void logout()
 	{
 		System.out.println("Successfully logged out.");
 		currUser = null;
 	}
 	
+	// returns true if there is an account owner with the given username
+	// false otheriwse
 	public static boolean doesUsernameExist(String username)
 	{
 		for (int i=0; i<numOfUsers; i++)
@@ -167,6 +181,9 @@ public class AppManager {
 		return false;
 	}
 	
+	// open a new account 
+	// add new user to users array
+	// add new user to the manager's users to approve array
 	public void openAccount()
 	{
 		System.out.println("Enter phone number area code");
@@ -386,12 +403,14 @@ public class AppManager {
 		System.out.println("To logout, enter -1");
 	}
 	
+	// get a 4 digit authentication code
 	public int getAuthenticationCode()
 	{
 		int code = (int) (Math.random() * 9000) + 1000;
 		return code;
 	}
 	
+	// get payee for bill payment
 	public Payee getPayee()
 	{
 		System.out.println("To pay the bank, enter 1");
