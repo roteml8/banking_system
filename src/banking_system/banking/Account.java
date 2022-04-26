@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 
 import banking_system.app.AppManager;
 
+/**
+ * a class that represents a bank account and its data
+ * @author Rotem
+ *
+ */
 public class Account {
 	
 	private int MAX_ACTIVITIES = 100;

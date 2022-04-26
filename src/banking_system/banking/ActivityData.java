@@ -2,6 +2,11 @@ package banking_system.banking;
 
 import java.time.LocalDateTime;
 
+/**
+ * a class that represents an account owner operation and its details
+ * @author Rotem
+ *
+ */
 public class ActivityData {
 	
 	protected ActivityName activityName;

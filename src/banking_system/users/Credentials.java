@@ -2,6 +2,11 @@ package banking_system.users;
 
 import java.util.Objects;
 
+/**
+ * a class that represents credentials by username and password
+ * @author Rotem
+ *
+ */
 public class Credentials {
 
 	protected String username;
@@ -21,6 +26,11 @@ public class Credentials {
 		this.password = password;
 	}
 	
+	/**
+	 * checks if given username is valid according to the constraints
+	 * @param username the given username
+	 * @return true if username is valid, false otherwise
+	 */
 	public static boolean isUsernameLegal(String username)
 	{
 		for (int i=0; i<username.length(); i++)
@@ -33,6 +43,11 @@ public class Credentials {
 		return true;
 	}
 	
+	/**
+	 * checks if given password is valid according to the constraints
+	 * @param password the given password
+	 * @return true if password is valid, false otherwise
+	 */
 	public static boolean isPasswordLegal(String password)
 	{
 		if (password.length() > 8 || password.length() < 4)

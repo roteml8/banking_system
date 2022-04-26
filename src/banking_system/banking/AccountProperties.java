@@ -1,5 +1,10 @@
 package banking_system.banking;
 
+/**
+ * enum class representing 4 account types and their properties
+ * @author Rotem
+ *
+ */
 public enum AccountProperties {
 	
 	

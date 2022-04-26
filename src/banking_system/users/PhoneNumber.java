@@ -2,6 +2,11 @@ package banking_system.users;
 
 import java.util.Objects;
 
+/**
+ * a class that represents a phone number by area code and number
+ * @author Rotem
+ *
+ */
 public class PhoneNumber {
 	
 	protected int areaCode;

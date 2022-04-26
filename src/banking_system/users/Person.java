@@ -2,6 +2,11 @@ package banking_system.users;
 
 import java.time.LocalDate;
 
+/**
+ * a class that represents a person and their info
+ * @author Rotem
+ *
+ */
 public class Person {
 	
 	protected String firstName;

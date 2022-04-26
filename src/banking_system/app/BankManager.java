@@ -8,6 +8,9 @@ import banking_system.users.AccountOwner;
 import banking_system.users.Credentials;
 import banking_system.users.PhoneNumber;
 
+/*
+ * a class that represents the bank manager 
+ */
 public class BankManager extends AccountOwner {
 	
 	private final int MAX_USERS = 100;

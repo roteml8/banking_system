@@ -11,6 +11,11 @@ import banking_system.users.AccountOwner;
 import banking_system.users.Credentials;
 import banking_system.users.PhoneNumber;
 
+/**
+ * the class that manages the application
+ * @author Rotem
+ *
+ */
 public class AppManager {
 	
 	private static final int MAX_USERS = 200;
@@ -251,6 +256,10 @@ public class AppManager {
 		return null;
 	}
 	
+	/**
+	 * get phone number from user by area code and number
+	 * @return the given phone number
+	 */
 	public PhoneNumber getPhoneFromInput()
 	{
 		System.out.println("Enter phone number area code");
@@ -261,6 +270,10 @@ public class AppManager {
 		return newPhone;
 	}
 	
+	/**
+	 * get date from user by year, month and day of month
+	 * @return the given date
+	 */
 	public LocalDate getDateFromInput()
 	{
 		System.out.println("Enter year");
@@ -274,6 +287,11 @@ public class AppManager {
 		return date;
 	}
 	
+	/** 
+	 * get name from user (first name and last name)
+	 * @param kind the requested name (first/last)
+	 * @return the given name
+	 */
 	public String getNameFromUser(String kind)
 	{
 		System.out.println("Enter "+kind+" name");
@@ -281,6 +299,10 @@ public class AppManager {
 		return input;
 	}
 	
+	/**
+	 * get username from user (for login and creating account)
+	 * @return the given username
+	 */
 	public String getUsernameFromInput()
 	{
 		System.out.println("Enter username: letters and digits only");
@@ -288,6 +310,10 @@ public class AppManager {
 		return username;
 	}
 	
+	/**
+	 * get password from user (for login and creating account)
+	 * @return the given password
+	 */
 	public String getPasswordFromInput()
 	{
 		System.out.println("Please enter password: 4-8 characters, must contain a digit and a letter");
@@ -295,6 +321,10 @@ public class AppManager {
 		return password;
 	}
 	
+	/**
+	 * get monthly income from the user
+	 * @return the monthly income
+	 */
 	public double getMonthlyIncomeFromInput()
 	{
 		System.out.println("Please enter your monthly income");
@@ -461,12 +491,22 @@ public class AppManager {
 		
 	}
 	
+	/**
+	 * get number of monthly payments from user
+	 * @return the number of months
+	 */
 	public int getNumberOfMonthsFromInput()
 	{
 		System.out.println("Enter number of monthly payments");
 		int months = sc.nextInt();
 		return months;
 	}
+	
+	/**
+	 * get amount of money from the user
+	 * @param purpose a string that describes the purpose of the money 
+	 * @return the given amount of money
+	 */
 	public double getAmountFromUser(String purpose)
 	{
 		System.out.println("Enter amount to "+purpose);
@@ -566,6 +606,9 @@ public class AppManager {
 		return numOfUsers;
 	}
 	
+	/**
+	 * prints to the screen all users in the system
+	 */
 	public static void printAllUsers()
 	{
 		for (int i=0; i< numOfUsers; i++)
