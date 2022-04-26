@@ -127,7 +127,7 @@ public class AccountOwner extends Person {
 		ActivityData newActivity = new ActivityData(ActivityName.PAY_BIll, -amount, now, info);
 		account.addActivity(newActivity);
 		account.payFee();
-		if (payee == Payee.BANK)
+		if (payee == Payee.BANK) // update debt and register deposit to the bank
 		{ 
 			account.changeDebt(-amount);
 			

@@ -78,13 +78,19 @@ public class Account {
 		this.releaseTime = releaseTime;
 	}
 	
+	// pay fee for bank
+	// register deposit to bank
+	// register fee collection to owner
 	public void payFee()
 	{
 		double fee = accProperties.feeLow;
 		changeBalance(-fee);
+		LocalDateTime now = LocalDateTime.now();
 		AppManager.manager.getAccount().changeBalance(fee); 
-		ActivityData feeData = new ActivityData(ActivityName.FEE_COLLECTION, fee, LocalDateTime.now(),"Fee collection");
-		AppManager.manager.getAccount().addActivity(feeData);
+		ActivityData feeBankData = new ActivityData(ActivityName.DEPOSIT, fee, now ,"Fee collection from owner");
+		AppManager.manager.getAccount().addActivity(feeBankData);
+		ActivityData ownerData = new ActivityData(ActivityName.FEE_COLLECTION, -fee, now, "Fee collection to bank");
+		addActivity(ownerData);
 	}
 	
 }

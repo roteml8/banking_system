@@ -211,17 +211,17 @@ public class AppManager {
 		return newPhone;
 	}
 	
-	public LocalDate getBirthdateFromInput()
+	public LocalDate getDateFromInput()
 	{
-		System.out.println("Enter year of birth");
+		System.out.println("Enter year");
 		int year = sc.nextInt();
-		System.out.println("Enter month of birth (1-12)");
+		System.out.println("Enter month (1-12)");
 		int month = sc.nextInt();
-		System.out.println("Enter day of birth (1-31)");
+		System.out.println("Enter day of month (1-31)");
 		int day = sc.nextInt();
 		sc.nextLine();
-		LocalDate birthDate = LocalDate.of(year, month, day);
-		return birthDate;
+		LocalDate date = LocalDate.of(year, month, day);
+		return date;
 	}
 	
 	public String getNameFromUser(String kind)
@@ -251,6 +251,7 @@ public class AppManager {
 		double income = sc.nextDouble();
 		return income;
 	}
+	
 	// open a new account 
 	// add new user to users array
 	// add new user to the manager's users to approve array
@@ -266,7 +267,8 @@ public class AppManager {
 
 		String name = getNameFromUser("first");
 		String lastName = getNameFromUser("last");
-		LocalDate birthDate = getBirthdateFromInput();
+		System.out.println("Enter birthday");
+		LocalDate birthDate = getDateFromInput();
 		String username = getUsernameFromInput();
 		if (getUserByUsername(username) != null)
 		{
@@ -344,7 +346,6 @@ public class AppManager {
 	{
 		printOwnerOptions();
 		int choice = sc.nextInt();
-		int year, month, day, areaCode, number;
 		double amount;
 		PhoneNumber phoneNum;
 		while (choice != -1)
@@ -355,50 +356,39 @@ public class AppManager {
 				currUser.checkBalance();
 				break;
 			case 2:
-				System.out.println("Enter start date for report: year, month and day of month");
-				year = sc.nextInt();
-				month = sc.nextInt();
-				day = sc.nextInt();
-				LocalDate start = LocalDate.of(year, month, day);
+				System.out.println("Enter start date for report:");
+				LocalDate start = getDateFromInput();
 				currUser.produceReport(start);
 				break;
 			case 3:
 				System.out.println("Your authentication code is "+getAuthenticationCode());
-				System.out.println("Enter amount for deposit");
-				amount = sc.nextDouble();
+				amount = getAmountFromUser("deposit");
 				currUser.deposit(amount);
 				break;
 			case 4:
-				System.out.println("Enter amount for withdrawal");
-				amount = sc.nextDouble();
+				amount = getAmountFromUser("withdraw");
 				currUser.withdrawl(amount);
 				break;
 			case 5:
-				System.out.println("Enter phone number of receiver: area code and number");
-				areaCode = sc.nextInt();
-				number = sc.nextInt();
-				phoneNum = new PhoneNumber(areaCode, number);
+				System.out.println("Enter phone number of receiver:");
+				phoneNum = getPhoneFromInput();
 				AccountOwner receiver = getOwnerByPhoneNum(phoneNum);
 				if (receiver == null)
 				{
 					System.out.println("No user with given phone number, operation terminates.");
 					break;
 				}
-				System.out.println("Enter amount to transfer");
-				amount = sc.nextDouble();
+				amount = getAmountFromUser("transfer");
 				currUser.transferFunds(amount, receiver);
 				break;
 			case 6:
 				Payee payee = getPayee();
-				System.out.println("Enter amount to pay");
-				amount = sc.nextDouble();
+				amount = getAmountFromUser("pay bill");
 				currUser.payBill(amount, payee);
 				break;
 			case 7: 
-				System.out.println("Enter amount to loan");
-				amount = sc.nextDouble();
-				System.out.println("Enter number of monthly payments");
-				int months = sc.nextInt();
+				amount = getAmountFromUser("loan");
+				int months =  getNumberOfMonthsFromInput();
 				currUser.getLoan(amount, months);
 				break;
 			default:
@@ -408,6 +398,19 @@ public class AppManager {
 			choice = sc.nextInt();
 		}
 		
+	}
+	
+	public int getNumberOfMonthsFromInput()
+	{
+		System.out.println("Enter number of monthly payments");
+		int months = sc.nextInt();
+		return months;
+	}
+	public double getAmountFromUser(String purpose)
+	{
+		System.out.println("Enter amount to "+purpose);
+		double amount = sc.nextDouble();
+		return amount;
 	}
 	
 	// menu for bank manager for set and approve accounts and access to account owners menu
