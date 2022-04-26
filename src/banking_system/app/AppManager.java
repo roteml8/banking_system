@@ -80,38 +80,62 @@ public class AppManager {
 	public AccountOwner login(String username, String password)
 	{
 		
-		AccountOwner loggingOwner = null;
-		Credentials ownerCredentials = null;
-		for (int i=0; i<users.length && loggingOwner == null; i++)
-		{
-			Credentials currentCredentials = users[i].getCredentials();
-			if (currentCredentials.getUsername().equals(username))
-			{
-				loggingOwner = users[i];
-				ownerCredentials = currentCredentials;
-			}
-		}
+		AccountOwner loggingOwner = getUserByUsername(username);
+		
 		if (loggingOwner == null)
 		{
 			System.out.println("No account owner with the given username.");
 			return null;
 		}
+		Credentials ownerCredentials = loggingOwner.getCredentials();
 		LocalDateTime currentRelease = loggingOwner.getAccount().getReleaseTime();
 		if (currentRelease != null)
 		{
-			if (currentRelease.isAfter(LocalDateTime.now()))
+			if (!checkRelease(currentRelease))
 			{
 				System.out.println("Your account has been blocked. please come back at "
-						+loggingOwner.getAccount().getReleaseTime());
-							return null;
+					+currentRelease);
+				return null;
 			}
 			loggingOwner.getAccount().setReleaseTime(null);
 		}
-		if (ownerCredentials.getPassword().equals(password))
+		
+		if (checkPassword(password, ownerCredentials.getPassword()))
 		{
 			System.out.println("Successfully logged in.");
 			return loggingOwner;
 		}
+		if (giveUser3TriesForPassword(loggingOwner))
+		{
+			System.out.println("Successfully logged in.");
+			return loggingOwner;
+		}
+		blockAccount(loggingOwner);
+		return null;
+	}
+	
+	// return if release time has passed
+	public boolean checkRelease(LocalDateTime release)
+	{
+		if (release.isAfter(LocalDateTime.now()))
+			return false;
+		return true;
+			
+	}
+	// block account of user 
+	public void blockAccount(AccountOwner user)
+	{
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime releaseTime = now.plusMinutes(30);
+		user.getAccount().setReleaseTime(releaseTime);
+		System.out.println("Your account has been blocked, come back at "+releaseTime);
+	}
+	
+	// give user 3 tries to enter correct password
+	// return true if succeeds, false otherwise
+	public boolean giveUser3TriesForPassword(AccountOwner user)
+	{
+		Credentials userCredentials = user.getCredentials();
 		int tries = 3;
 		while (tries > 0)
 		{
@@ -119,22 +143,18 @@ public class AppManager {
 			System.out.printf("Wrong password! you have %d more tries\n", tries);
 			System.out.println("Enter password");
 			String currentTry = sc.next();
-			if (ownerCredentials.getPassword().equals(currentTry))
-			{
-				System.out.println("Successfully logged in.");
-				return loggingOwner;
-			} 
+			if (checkPassword(currentTry, userCredentials.getPassword()))
+				return true;
 			else
-			{
 				tries--;
-				
-			}
 		}
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime releaseTime = now.plusMinutes(30);
-		loggingOwner.getAccount().setReleaseTime(releaseTime);
-		System.out.println("Your account has been blocked, come back at "+releaseTime);
-		return null;
+		return false;
+	}
+	
+	// check equality of passwords
+	public boolean checkPassword(String givenPassword, String actualPassword)
+	{
+		return givenPassword.equals(actualPassword);
 	}
 	
 	// login with phone number
@@ -169,38 +189,30 @@ public class AppManager {
 		currUser = null;
 	}
 	
-	// returns true if there is an account owner with the given username
-	// false otheriwse
-	public static boolean doesUsernameExist(String username)
+	// returns account owner with the given username
+	// null if no such username
+	public AccountOwner getUserByUsername(String username)
 	{
 		for (int i=0; i<numOfUsers; i++)
 		{
 			if (users[i].getCredentials().getUsername().equals(username))
-				return true;
+				return users[i];
 		}
-		return false;
+		return null;
 	}
 	
-	// open a new account 
-	// add new user to users array
-	// add new user to the manager's users to approve array
-	public void openAccount()
+	public PhoneNumber getPhoneFromInput()
 	{
 		System.out.println("Enter phone number area code");
 		int areaCode = sc.nextInt();
 		System.out.println("Enter phone number");
 		int phoneNum = sc.nextInt();
 		PhoneNumber newPhone = new PhoneNumber(areaCode, phoneNum);
-		if (getOwnerByPhoneNum(newPhone) != null)
-		{
-			System.out.println("There is already an account with this phone number. please login or register with a different number");
-			return;
-		}
-		sc.nextLine();
-		System.out.println("Enter your first name");
-		String name = sc.next();
-		System.out.println("Enter your last name");
-		String lastName = sc.next();
+		return newPhone;
+	}
+	
+	public LocalDate getBirthdateFromInput()
+	{
 		System.out.println("Enter year of birth");
 		int year = sc.nextInt();
 		System.out.println("Enter month of birth (1-12)");
@@ -209,28 +221,65 @@ public class AppManager {
 		int day = sc.nextInt();
 		sc.nextLine();
 		LocalDate birthDate = LocalDate.of(year, month, day);
+		return birthDate;
+	}
+	
+	public String getNameFromUser(String kind)
+	{
+		System.out.println("Enter "+kind+" name");
+		String input = sc.next();
+		return input;
+	}
+	
+	public String getUsernameFromInput()
+	{
 		System.out.println("Enter username: letters and digits only");
 		String username = sc.next();
-		if (doesUsernameExist(username))
+		return username;
+	}
+	
+	public String getPasswordFromInput()
+	{
+		System.out.println("Please enter password: 4-8 characters, must contain a digit and a letter");
+		String password = sc.next();
+		return password;
+	}
+	
+	public double getMonthlyIncomeFromInput()
+	{
+		System.out.println("Please enter your monthly income");
+		double income = sc.nextDouble();
+		return income;
+	}
+	// open a new account 
+	// add new user to users array
+	// add new user to the manager's users to approve array
+	public void openAccount()
+	{
+		PhoneNumber newPhone = getPhoneFromInput();
+		if (getOwnerByPhoneNum(newPhone) != null)
+		{
+			System.out.println("There is already an account with this phone number. please login or register with a different number");
+			return;
+		}
+		sc.nextLine();
+
+		String name = getNameFromUser("first");
+		String lastName = getNameFromUser("last");
+		LocalDate birthDate = getBirthdateFromInput();
+		String username = getUsernameFromInput();
+		if (getUserByUsername(username) != null)
 		{
 			System.out.println("Username already exists in the system. please login");
 			return;
 		}
 		while (!Credentials.isUsernameLegal(username))
-		{
-			System.out.println("Invalid username, please enter a username according to the instructions");
-			username = sc.next();
-		}
-		System.out.println("Please enter password: 4-8 characters, must contain a digit and a letter");
-		String password = sc.next();
+			username = getUsernameFromInput();
+		String password = getPasswordFromInput();
 		while (!Credentials.isPasswordLegal(password))
-		{
-			System.out.println("Invalid password, please enter a password according to the instructions");
-			password = sc.next();
-		}
+			password = getPasswordFromInput();
 		Credentials newCred = new Credentials(username, password);
-		System.out.println("Please enter your monthly income");
-		double income = sc.nextDouble();
+		double income = getMonthlyIncomeFromInput();
 		AccountOwner newOwner = new AccountOwner(name, lastName, newPhone, birthDate, income, newCred);
 		addUser(newOwner);
 		manager.addUserToApprove(newOwner);
@@ -253,7 +302,6 @@ public class AppManager {
 		printUserOptions();
 		int choice = sc.nextInt();
 		sc.nextLine();
-		int areaCode, number;
 		String username, password;
 		while (choice != -1)
 		{
@@ -263,10 +311,8 @@ public class AppManager {
 				openAccount();
 				break;
 			case 2:
-				System.out.println("Enter username");
-				username = sc.next();
-				System.out.println("Enter password");
-				password = sc.next();
+				username = getUsernameFromInput();
+				password = getPasswordFromInput();
 				currUser = login(username, password);
 				if (currUser != null)
 					if (currUser instanceof BankManager)
@@ -275,11 +321,7 @@ public class AppManager {
 						accountOwnerMenu();
 				break;
 			case 3:
-				System.out.println("Enter phone area code");
-				areaCode = sc.nextInt();
-				System.out.println("Enter phone number");
-				number = sc.nextInt();
-				PhoneNumber currPhone = new PhoneNumber(areaCode, number);
+				PhoneNumber currPhone = getPhoneFromInput();
 				currUser = login(currPhone);
 				if (currUser != null)
 					if (currUser instanceof BankManager)
