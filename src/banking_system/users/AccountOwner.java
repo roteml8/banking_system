@@ -76,7 +76,7 @@ public class AccountOwner extends Person {
 	public void withdrawl(double amount)
 	{
 		// check withdrawal is possible...
-		if (amount > account.getAccProperties().dailyMax)
+		if (amount > account.getAccProperties().dailyMax || amount > account.getBalance())
 		{
 			System.out.println("Operation is impossible due to amount exceeding limit");
 			return;
@@ -94,7 +94,7 @@ public class AccountOwner extends Person {
 	public void transferFunds(double amount, AccountOwner receiver)
 	{
 		// check if possible...
-		if (amount > MAX_TRANSFER)
+		if (amount > MAX_TRANSFER || amount > account.getBalance())
 		{
 			System.out.println("Operation is impossible due to amount exceeding limit");
 			return;
@@ -115,7 +115,7 @@ public class AccountOwner extends Person {
 	public void payBill(double amount, Payee payee)
 	{
 		// check if possible...
-		if (amount > MAX_BILL_PAYMENT)
+		if (amount > MAX_BILL_PAYMENT || amount > account.getBalance())
 		{
 			System.out.println("Operation is impossible due to amount exceeding limit");
 			return;
