@@ -62,6 +62,13 @@ public class AppManager {
 		
 	}
 	
+	public void run()
+	{
+		System.out.println("Welcome to the AJBC Bank!");
+		userMenu();
+		
+	}
+	
 	public AccountOwner login(String username, String password)
 	{
 		
@@ -80,6 +87,17 @@ public class AppManager {
 		{
 			System.out.println("No account owner with the given username.");
 			return null;
+		}
+		LocalDateTime currentRelease = loggingOwner.getAccount().getReleaseTime();
+		if (currentRelease != null)
+		{
+			if (currentRelease.isAfter(LocalDateTime.now()))
+			{
+				System.out.println("Your account has been blocked. please come back at "
+						+loggingOwner.getAccount().getReleaseTime());
+							return null;
+			}
+			loggingOwner.getAccount().setReleaseTime(null);
 		}
 		if (ownerCredentials.getPassword().equals(password))
 		{
@@ -105,7 +123,9 @@ public class AppManager {
 			}
 		}
 		LocalDateTime now = LocalDateTime.now();
-		System.out.println("Your account has been blocked, come back at "+now.plusMinutes(30));
+		LocalDateTime releaseTime = now.plusMinutes(30);
+		loggingOwner.getAccount().setReleaseTime(releaseTime);
+		System.out.println("Your account has been blocked, come back at "+releaseTime);
 		return null;
 	}
 	
@@ -201,13 +221,6 @@ public class AppManager {
 		
 	}
 	
-	public void run()
-	{
-		//TODO
-		System.out.println("Welcome to the AJBC Bank!");
-		userMenu();
-		
-	}
 	
 	public void printUserOptions()
 	{

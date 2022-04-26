@@ -11,6 +11,7 @@ public class Account {
 	protected ActivityData[] activities;
 	protected int numActivities;
 	protected double debt;
+	protected LocalDateTime releaseTime;
 
 	public Account(AccountProperties accProperties)
 	{
@@ -19,6 +20,7 @@ public class Account {
 		this.activities = new ActivityData[MAX_ACTIVITIES];
 		this.accProperties = accProperties;
 		this.debt = 0;
+
 	}
 	
 	public void changeBalance(double amount)
@@ -65,6 +67,15 @@ public class Account {
 	public double getBalance() {
 		return balance;
 	}
+
+	public LocalDateTime getReleaseTime() {
+		return releaseTime;
+	}
+
+	public void setReleaseTime(LocalDateTime releaseTime) {
+		this.releaseTime = releaseTime;
+	}
+	
 	
 	
 }
