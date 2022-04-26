@@ -55,6 +55,7 @@ public class BankManager extends AccountOwner {
 	public void produceReport(LocalDate start)
 	{
 		System.out.println("Presenting report for bank account: ");
+		System.out.println("------------------------------");
 		super.produceReport(start);
 	}
 	
@@ -70,6 +71,7 @@ public class BankManager extends AccountOwner {
 			return AccountProperties.BRONZE;
 	}
 	
+
 	
 
 }

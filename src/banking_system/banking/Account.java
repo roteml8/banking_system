@@ -2,6 +2,8 @@ package banking_system.banking;
 
 import java.time.LocalDateTime;
 
+import banking_system.app.AppManager;
+
 public class Account {
 	
 	private int MAX_ACTIVITIES = 100;
@@ -80,6 +82,9 @@ public class Account {
 	{
 		double fee = accProperties.feeLow;
 		changeBalance(-fee);
+		AppManager.manager.getAccount().changeBalance(fee); 
+		ActivityData feeData = new ActivityData(ActivityName.FEE_COLLECTION, fee, LocalDateTime.now(),"Fee collection");
+		AppManager.manager.getAccount().addActivity(feeData);
 	}
 	
 }

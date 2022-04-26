@@ -55,6 +55,7 @@ public class AccountOwner extends Person {
 	public void produceReport(LocalDate start)
 	{
 		System.out.println(this);
+		System.out.println("------------------------------");
 		account.showActivites();
 		checkBalance();
 		
