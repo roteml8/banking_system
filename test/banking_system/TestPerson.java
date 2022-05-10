@@ -22,7 +22,7 @@ class TestPerson {
 	@Test
 	void TestConstructor() {
 		LocalDate birthDate = LocalDate.of(1994, 8, 8);
-		PhoneNumber phoneNum = new PhoneNumber(052, 5360337);
+		PhoneNumber phoneNum = new PhoneNumber("052", "5360337");
 		person = new Person("Rotem","Levi",phoneNum, birthDate);
 		assertNotNull(person);
 		assertEquals(birthDate, person.getBirthDate());
@@ -35,7 +35,7 @@ class TestPerson {
 	@Test
 	void testSetFields()
 	{
-		PhoneNumber phoneNum = new PhoneNumber(050,123456);
+		PhoneNumber phoneNum = new PhoneNumber("050","123456");
 		person = new Person(phoneNum);
 		LocalDate bDate = LocalDate.of(2022, 5, 10);
 		person.setBirthDate(bDate);

@@ -50,7 +50,7 @@ public class AppManager {
 	private void setManager()
 	{
 		Credentials managerCred = new Credentials("rotemlevi", "rotem8");
-		PhoneNumber managerPhone = new PhoneNumber(52, 5360337);
+		PhoneNumber managerPhone = new PhoneNumber("052", "5360337");
 		LocalDate managerBday = LocalDate.of(1994, 8, 8);
 		manager = new BankManager("Rotem", "Levi", managerPhone, managerBday, 50000, managerCred);
 		users.add(manager);
@@ -63,14 +63,14 @@ public class AppManager {
 	{
 		Credentials c1 = new Credentials("yaron", "yaron12");
 		LocalDate bday1 = LocalDate.of(1994, 6, 22);
-		PhoneNumber phone1 = new PhoneNumber(54,5304014);
+		PhoneNumber phone1 = new PhoneNumber("054","5304014");
 		AccountOwner owner1 = new AccountOwner("Yaron", "Shender", phone1, bday1, 20000, c1);
 		owner1.setAccount(new Account(AccountProperties.BRONZE)); 
 		addUser(owner1);
 		
 		Credentials c2 = new Credentials("matanl", "matan755");
 		LocalDate bday2 = LocalDate.of(2007, 5, 7);
-		PhoneNumber phone2 = new PhoneNumber(54,5301114);
+		PhoneNumber phone2 = new PhoneNumber("054","5301114");
 		AccountOwner owner2 = new AccountOwner("Matan", "Levi", phone2, bday2, 20000, c2);
 		owner2.setAccount(new Account(AccountProperties.GOLD));
 		addUser(owner2);
@@ -294,9 +294,9 @@ public class AppManager {
 	public PhoneNumber getPhoneFromInput()
 	{
 		System.out.println("Enter phone number area code");
-		int areaCode = sc.nextInt();
+		String areaCode = sc.next();
 		System.out.println("Enter phone number");
-		int phoneNum = sc.nextInt();
+		String phoneNum = sc.next();
 		PhoneNumber newPhone = new PhoneNumber(areaCode, phoneNum);
 		return newPhone;
 	}

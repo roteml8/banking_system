@@ -9,21 +9,21 @@ import java.util.Objects;
  */
 public class PhoneNumber {
 	
-	protected int areaCode;
-	protected int number;
+	protected String areaCode;
+	protected String number;
 	
-	public PhoneNumber(int areaCode, int number) {
-		this.areaCode = areaCode;
-		this.number = number;
+	public PhoneNumber(String areaCode, String number) {
+		setAreaCode(areaCode);
+		setNumber(number);
 	}
 	
 	public String toString()
 	{
-		String str = String.format("%03d", areaCode);
-		str += "-";
-		str += String.format("%07d", number);
+		String str = String.format("%s-%s", areaCode, number);
 		return str;
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -39,8 +39,25 @@ public class PhoneNumber {
 		if (getClass() != obj.getClass())
 			return false;
 		PhoneNumber other = (PhoneNumber) obj;
-		return areaCode == other.areaCode && number == other.number;
+		return Objects.equals(areaCode, other.areaCode) && Objects.equals(number, other.number);
 	}
 
+	public String getAreaCode() {
+		return areaCode;
+	}
+
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	
 	
 }
