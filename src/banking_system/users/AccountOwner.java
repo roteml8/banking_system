@@ -211,6 +211,14 @@ public class AccountOwner extends Person {
 		System.out.println("Successfully completed loan.\n");
 
 	}
+	
+	/**
+	 * send the account owner for manager approval
+	 */
+	public void sendToManagerApproval()
+	{
+		AppManager.manager.addUserToApprove(this);
+	}
 
 
 	@Override

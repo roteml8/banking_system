@@ -17,7 +17,6 @@ import banking_system.users.PhoneNumber;
  *
  */
 
-//TODO: move adding owner for manager approval to account owner
 public class AppManager {
 	
 	private static final int MAX_USERS = 200;
@@ -89,6 +88,11 @@ public class AppManager {
 		
 	}
 	
+	/**
+	 * checks if the account owner has been approved my manager
+	 * @param owner the account owner
+	 * @return false if the account is null, true otherwise
+	 */
 	public boolean isUserApproved(AccountOwner owner)
 	{
 		if (owner.getAccount() == null)
@@ -394,7 +398,7 @@ public class AppManager {
 		double income = getMonthlyIncomeFromInput();
 		AccountOwner newOwner = new AccountOwner(name, lastName, newPhone, birthDate, income, newCred);
 		addUser(newOwner);
-		manager.addUserToApprove(newOwner);
+		newOwner.sendToManagerApproval();
 		System.out.println("Application completed. waiting for managar approval and setting.");
 		
 	}
