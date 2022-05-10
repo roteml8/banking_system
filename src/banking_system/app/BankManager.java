@@ -43,7 +43,7 @@ public class BankManager extends AccountOwner {
 		for (int i=0; i<numUsersToApprove; i++)
 		{
 			AccountOwner currentOwner = usersToApprove[i];
-			AccountProperties currentProp = getAccountType(currentOwner.getMonthlyIncome());
+			AccountProperties currentProp = AccountProperties.getAccountType(currentOwner.getMonthlyIncome());
 			Account newAccount = new Account(currentProp);
 			usersToApprove[i].setAccount(newAccount);
 			System.out.println("Set the account ID: "+newAccount.getID()+" of "+currentOwner.getFullName()+
@@ -75,24 +75,6 @@ public class BankManager extends AccountOwner {
 		super.produceReport(start);
 	}
 	
-	/**
-	 * get account properties by monthly income
-	 * @param income monthly income of account owner
-	 * @return the corresponding account properties
-	 */
-	public AccountProperties getAccountType(double income)
-	{
-		if (income > 50000)
-			return AccountProperties.TITANIUM;
-		else if (income > 20000)
-			return AccountProperties.GOLD;
-		else if (income > 10000)
-			return AccountProperties.SILVER;
-		else
-			return AccountProperties.BRONZE;
-	}
-	
 
-	
 
 }

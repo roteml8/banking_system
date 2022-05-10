@@ -16,6 +16,8 @@ import banking_system.users.PhoneNumber;
  * @author Rotem
  *
  */
+
+//TODO: move adding owner for manager approval to account owner
 public class AppManager {
 	
 	private static final int MAX_USERS = 200;
@@ -87,6 +89,17 @@ public class AppManager {
 		
 	}
 	
+	public boolean isUserApproved(AccountOwner owner)
+	{
+		if (owner.getAccount() == null)
+		{
+			System.out.println("User hasn't been approved by manager yet.");
+			return false;
+
+		}
+		return true;
+	}
+	
 	
 	/**
 	 *  login with username and password
@@ -107,6 +120,8 @@ public class AppManager {
 			System.out.println("No account owner with the given username.");
 			return null;
 		}
+		if (!isUserApproved(loggingOwner))
+			return null;
 		Credentials ownerCredentials = loggingOwner.getCredentials();
 		LocalDateTime currentRelease = loggingOwner.getAccount().getReleaseTime();
 		if (currentRelease != null)
@@ -207,6 +222,19 @@ public class AppManager {
 		{
 			System.out.println("No user with the given phone number.");
 			return null;
+		}
+		if (!isUserApproved(owner))
+			return null;
+		LocalDateTime currentRelease = owner.getAccount().getReleaseTime();
+		if (currentRelease != null)
+		{
+			if (!checkRelease(currentRelease))
+			{
+				System.out.println("Your account has been blocked. please come back at "
+					+currentRelease);
+				return null;
+			}
+			owner.getAccount().setReleaseTime(null);
 		}
 		System.out.println("Successfully logged in.");
 		return owner;

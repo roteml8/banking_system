@@ -30,5 +30,22 @@ public enum AccountProperties {
 		this.dailyMax = dailyMax;
 	}
 	
+	/**
+	 * get account properties by monthly income
+	 * @param income monthly income of account owner
+	 * @return the corresponding account properties
+	 */
+	public static AccountProperties getAccountType(double income)
+	{
+		if (income > 50000)
+			return AccountProperties.TITANIUM;
+		else if (income > 20000)
+			return AccountProperties.GOLD;
+		else if (income > 10000)
+			return AccountProperties.SILVER;
+		else
+			return AccountProperties.BRONZE;
+	}
+	
 
 }
