@@ -1,6 +1,7 @@
 package banking_system.app;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import banking_system.banking.Account;
 import banking_system.banking.AccountProperties;
@@ -12,17 +13,13 @@ import banking_system.users.PhoneNumber;
  * a class that represents the bank manager 
  */
 public class BankManager extends AccountOwner {
-	
-	private final int MAX_USERS = 100;
-	
-	protected AccountOwner[] usersToApprove;
-	protected int numUsersToApprove;
+		
+	protected ArrayList<AccountOwner> usersToApprove;
 
 	public BankManager(String firstName, String lastName, PhoneNumber phoneNum, LocalDate birthDate,
 			double monthlyIncome, Credentials credentials) {
 		super(firstName, lastName, phoneNum, birthDate, monthlyIncome, credentials);
-		this.numUsersToApprove = 0;
-		this.usersToApprove = new AccountOwner[MAX_USERS];
+		this.usersToApprove = new ArrayList<>();
 		this.account = new Account(AccountProperties.TITANIUM);
 		this.account.changeBalance(500000);
 	}
@@ -35,22 +32,21 @@ public class BankManager extends AccountOwner {
 	 */
 	public void setAndApproveAcc()
 	{
-		if (numUsersToApprove == 0)
+		if (usersToApprove.size() == 0)
 		{
 			System.out.println("No users waiting for approval.");
 			return;
 		}
-		for (int i=0; i<numUsersToApprove; i++)
+		for (AccountOwner user: usersToApprove)
 		{
-			AccountOwner currentOwner = usersToApprove[i];
-			AccountProperties currentProp = AccountProperties.getAccountType(currentOwner.getMonthlyIncome());
+			AccountProperties currentProp = AccountProperties.getAccountType(user.getMonthlyIncome());
 			Account newAccount = new Account(currentProp);
-			usersToApprove[i].setAccount(newAccount);
-			System.out.println("Set the account ID: "+newAccount.getID()+" of "+currentOwner.getFullName()+
+			user.setAccount(newAccount);
+			System.out.println("Set the account ID: "+newAccount.getID()+" of "+user.getFullName()+
 					" to: "+currentProp.toString());
 		}
 		
-		numUsersToApprove = 0;
+		usersToApprove.clear();
 	}
 	
 	/** 
@@ -59,7 +55,7 @@ public class BankManager extends AccountOwner {
 	 */
 	public void addUserToApprove(AccountOwner accountOwner)
 	{
-		usersToApprove[numUsersToApprove++] = accountOwner;
+		usersToApprove.add(accountOwner);
 		
 	}
 	

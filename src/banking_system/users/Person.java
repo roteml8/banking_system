@@ -20,6 +20,11 @@ public class Person {
 		setBirthDate(birthDate);
 		this.phoneNum = phoneNum;
 	}
+	
+	public Person(PhoneNumber phoneNum)
+	{
+		this.phoneNum = phoneNum;
+	}
 
 	public void setFirstName(String firstName) {
 		firstName.replaceAll("[0-9]", "");
@@ -44,6 +49,18 @@ public class Person {
 
 	public PhoneNumber getPhoneNum() {
 		return phoneNum;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 	
 	

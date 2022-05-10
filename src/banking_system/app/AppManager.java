@@ -2,6 +2,7 @@ package banking_system.app;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import banking_system.banking.Account;
@@ -19,10 +20,9 @@ import banking_system.users.PhoneNumber;
 
 public class AppManager {
 	
-	private static final int MAX_USERS = 200;
 	
+	private ArrayList<AccountOwner> users;
 	private static AccountOwner currUser;
-	private static AccountOwner[] users;
 	public static BankManager manager;
 	private static int numOfUsers;
 	
@@ -30,7 +30,7 @@ public class AppManager {
 	
 	public AppManager()
 	{
-		users = new AccountOwner[MAX_USERS];
+		users = new ArrayList<>();
 		numOfUsers = 0;
 		setManager();
 		setUsers();
@@ -42,7 +42,7 @@ public class AppManager {
 	 */
 	private void addUser(AccountOwner owner)
 	{
-		users[numOfUsers++] = owner;
+		users.add(owner);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class AppManager {
 		PhoneNumber managerPhone = new PhoneNumber(52, 5360337);
 		LocalDate managerBday = LocalDate.of(1994, 8, 8);
 		manager = new BankManager("Rotem", "Levi", managerPhone, managerBday, 50000, managerCred);
-		users[numOfUsers++] = manager;
+		users.add(manager);
 	}
 	
 	/**
@@ -251,12 +251,12 @@ public class AppManager {
 	 * @return the account owner with the given phone number, 
 	 * null if there is no user with this number
 	 */
-	public static AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNum)
+	public AccountOwner getOwnerByPhoneNum(PhoneNumber phoneNum)
 	{
-		for (int i=0; i<numOfUsers; i++)
+		for (AccountOwner user: users)
 		{
-			if (users[i].getPhoneNum().equals(phoneNum))
-				return users[i];
+			if (user.getPhoneNum().equals(phoneNum))
+				return user;
 		}
 		return null;
 	}
@@ -280,10 +280,10 @@ public class AppManager {
 	 */
 	public AccountOwner getUserByUsername(String username)
 	{
-		for (int i=0; i<numOfUsers; i++)
+		for (AccountOwner user: users)
 		{
-			if (users[i].getCredentials().getUsername().equals(username))
-				return users[i];
+			if (user.getCredentials().getUsername().equals(username))
+				return user;
 		}
 		return null;
 	}
@@ -641,10 +641,10 @@ public class AppManager {
 	/**
 	 * prints to the screen all users in the system
 	 */
-	public static void printAllUsers()
+	public void printAllUsers()
 	{
-		for (int i=0; i< numOfUsers; i++)
-			System.out.println(users[i]);
+		for (AccountOwner user: users)
+			System.out.println(user);
 	}
 	
 }

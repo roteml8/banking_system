@@ -2,6 +2,7 @@ package banking_system.banking;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import banking_system.app.AppManager;
 
@@ -12,13 +13,11 @@ import banking_system.app.AppManager;
  */
 public class Account {
 	
-	private int MAX_ACTIVITIES = 100;
 	private static int COUNTER = 1;
 	
 	protected double balance;
 	protected AccountProperties accProperties;
-	protected ActivityData[] activities;
-	protected int numActivities;
+	protected ArrayList<ActivityData> activities;
 	protected double debt;
 	protected LocalDateTime releaseTime;
 	protected final int ID;
@@ -26,8 +25,7 @@ public class Account {
 	public Account(AccountProperties accProperties)
 	{
 		this.balance = 0;
-		this.numActivities = 0;
-		this.activities = new ActivityData[MAX_ACTIVITIES];
+		this.activities = new ArrayList<>();
 		this.accProperties = accProperties;
 		this.debt = 0;
 		this.ID = COUNTER++;
@@ -58,8 +56,7 @@ public class Account {
 	 */
 	public void addActivity(ActivityData activityData)
 	{
-		if (numActivities < MAX_ACTIVITIES)
-			activities[numActivities++] = activityData;
+		activities.add(activityData);
 		
 	}
 
@@ -72,22 +69,17 @@ public class Account {
 		return accProperties;
 	}
 
-	public int getNumActivities() {
-		return numActivities;
-	}
-	
 	/**
 	 * print all account activities starting from the given start date 
 	 * @param start the given start date
 	 */
 	public void showActivites(LocalDate start)
 	{
-		for (int i=0; i<numActivities; i++)
+		for (ActivityData activity: activities)
 		{
-			ActivityData current = activities[i];
-			LocalDate timeStamp = current.timeStamp.toLocalDate();
+			LocalDate timeStamp = activity.timeStamp.toLocalDate();
 			if (timeStamp.isAfter(start) || timeStamp.isEqual(start))
-				System.out.println(current);
+				System.out.println(activity);
 		}
 		System.out.println("Current debt is: "+debt);
 	}
