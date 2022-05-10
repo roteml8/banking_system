@@ -33,18 +33,31 @@ class TestPerson {
 	}
 	
 	@Test
-	void testSetFields()
+	void testSetPhoneAndBirthDate()
 	{
 		PhoneNumber phoneNum = new PhoneNumber("050","123456");
 		person = new Person(phoneNum);
 		LocalDate bDate = LocalDate.of(2022, 5, 10);
 		person.setBirthDate(bDate);
-		person.setFirstName("First");
-		person.setLastName("Last");
 		assertEquals(bDate,person.getBirthDate());
 		assertEquals(phoneNum, person.getPhoneNum());
-		assertEquals("First", person.getFirstName());
-		assertEquals("Last", person.getLastName());
+
+	}
+	
+	@Test
+	void testSetFirstAndLast()
+	{
+		String first = "Rotem!!", last = "levi1";
+		PhoneNumber phoneNum = new PhoneNumber("050","123456");
+		person = new Person(phoneNum);
+		person.setFirstName(first);
+		person.setLastName(last);
+		assertEquals("Rotem", person.getFirstName());
+		assertEquals("levi", person.getLastName());
+		person.setFirstName("Yaron");
+		person.setLastName("shender");
+		assertEquals("Yaron", person.getFirstName());
+		assertEquals("shender", person.getLastName());
 	}
 
 }

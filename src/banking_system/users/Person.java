@@ -27,15 +27,29 @@ public class Person {
 	}
 
 	public void setFirstName(String firstName) {
-		firstName.replaceAll("[0-9]", "");
-		this.firstName = firstName;
+		this.firstName = trimNonLetters(firstName);
 	}
 
 	public void setLastName(String lastName) {
-		lastName.replaceAll("[0-9]", "");
-		this.lastName = lastName;
+
+		this.lastName = trimNonLetters(lastName);
 	}
 
+	/**
+	 * removes non-letter chars from string
+	 * @param str the string to be modified
+	 * @return
+	 */
+	public String trimNonLetters(String str)
+	{
+		String valid = "";
+		for (int i = 0; i < str.length(); i++) {
+			char current = str.charAt(i);
+			if (Character.isLetter(current))
+				valid += current;
+		}
+		return valid;
+	}
 
 	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
