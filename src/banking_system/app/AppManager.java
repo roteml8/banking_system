@@ -20,7 +20,6 @@ import banking_system.users.PhoneNumber;
 
 public class AppManager {
 	
-	
 	private ArrayList<AccountOwner> users;
 	private static AccountOwner currUser;
 	public static BankManager manager;
